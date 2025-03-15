@@ -96,17 +96,17 @@
 <li>处理特殊字符的安全性</li>
 <li>影响某些特定功能的行为</li>
 </ol>
-<p>![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2025-03-15 175515.png)</p>
+<p><img src="https://cdn.jsdelivr.net/gh/A-gi-art/picture2/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-03-15%20175515.png"></p>
 <p>到这个这个页面，我们看到了一个疑似flag的文件，我们去尝试获取文件的所有内容</p>
 <p>payload：?url&#x3D;system(“cat%20&#x2F;flllllaaaaaaggggggg”);</p>
-<p>![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2025-03-15 181146.png)</p>
+<p><img src="https://cdn.jsdelivr.net/gh/A-gi-art/picture2/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-03-15%20181146.png"></p>
 <p>这样我们就得到了这道题的flag</p>
-<h2 id="SWPUCTF-2021-新生赛-hardrce"><a href="#SWPUCTF-2021-新生赛-hardrce" class="headerlink" title="[SWPUCTF 2021 新生赛]hardrce"></a>[SWPUCTF 2021 新生赛]hardrce</h2><p>![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2025-03-15 181600.png)</p>
+<h2 id="SWPUCTF-2021-新生赛-hardrce"><a href="#SWPUCTF-2021-新生赛-hardrce" class="headerlink" title="[SWPUCTF 2021 新生赛]hardrce"></a>[SWPUCTF 2021 新生赛]hardrce</h2><p><img src="https://cdn.jsdelivr.net/gh/A-gi-art/picture2/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-03-15%20181600.png"></p>
 <p>首先进行代码审计</p>
 <p>if的条件要求是$_COOKIE[‘admin’]是否等于1；我们先尝试着满足条件</p>
-<p>![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2025-03-15 181909.png)</p>
+<p><img src="https://cdn.jsdelivr.net/gh/A-gi-art/picture2/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-03-15%20181909.png"></p>
 <p>此时回显了一个php文件，我们去访问它</p>
-<p>![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2025-03-15 182858.png)</p>
+<p><img src="https://cdn.jsdelivr.net/gh/A-gi-art/picture2/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-03-15%20182858.png"></p>
 <p>首先会看到preg_match()函数用于执行一个正则表达式匹配，搜素字符串与给定模式匹配的内容</p>
 <p>这行代码的意思是过滤了空格</p>
 <p>再往下看，看到了shell_exec()函数，考虑是命令执行</p>
@@ -120,17 +120,17 @@
 <p>payload：？url&#x3D;ls$IFS$9&#x2F;</p>
 </li>
 </ol>
-<p>![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2025-03-15 195817.png)</p>
+<p><img src="https://cdn.jsdelivr.net/gh/A-gi-art/picture2/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-03-15%20195817.png"></p>
 <p>然后我们就要获取文件里的内容，仍要注意不能使用空格</p>
 <p>payload: ?url&#x3D;cat${IFS}&#x2F;flllllaaaaaaggggggg</p>
-<p>![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2025-03-15 200036.png)</p>
+<p><img src="https://cdn.jsdelivr.net/gh/A-gi-art/picture2/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-03-15%20200036.png"></p>
 <p>最后得到flag</p>
-<h1 id="一道简单的反序列化"><a href="#一道简单的反序列化" class="headerlink" title="一道简单的反序列化"></a>一道简单的反序列化</h1><p>![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2025-03-15 200956.png)</p>
+<h1 id="一道简单的反序列化"><a href="#一道简单的反序列化" class="headerlink" title="一道简单的反序列化"></a>一道简单的反序列化</h1><p><img src="https://cdn.jsdelivr.net/gh/A-gi-art/picture2/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-03-15%20200956.png"></p>
 <p>首先进行代码审计，我们可以发现定义了一个名字叫Fun的类,变量fun创建了一个新的队形，变量ser是变量fun的反序列化，当传入的变量un和ser相等时，才会输出flag</p>
 <p>复制代码在本地运行，输出ser变量</p>
 <p><img src="C:\Users\21649\AppData\Local\Temp\c643f2a5aee7fd20d6377bbea91ff0e1.png" alt="c643f2a5aee7fd20d6377bbea91ff0e1"></p>
 <p>payload: ?un&#x3D;O:3:”Fun”:3:{s:4:”name”;s:5:”vFREE”;s:3:”age”;s:2:”19”;s:4:”look”;s:8:”handsome”;}</p>
-<p>![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2025-03-15 201542.png)</p>
+<p><img src="https://cdn.jsdelivr.net/gh/A-gi-art/picture2/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-03-15%20201542.png"></p>
 <p>这样就得到了flag</p>
 <h1 id="SWPUCTF-2021-新生赛-hardrce-1"><a href="#SWPUCTF-2021-新生赛-hardrce-1" class="headerlink" title="[SWPUCTF 2021 新生赛]hardrce"></a>[SWPUCTF 2021 新生赛]hardrce</h1><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">header</span>(<span class="string">&quot;Content-Type:text/html;charset=utf-8&quot;</span>);</span><br><span class="line"><span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);</span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;wllm&#x27;</span>]))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="variable">$wllm</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;wllm&#x27;</span>];</span><br><span class="line">    <span class="variable">$blacklist</span> = [<span class="string">&#x27; &#x27;</span>,<span class="string">&#x27;\t&#x27;</span>,<span class="string">&#x27;\r&#x27;</span>,<span class="string">&#x27;\n&#x27;</span>,<span class="string">&#x27;\+&#x27;</span>,<span class="string">&#x27;\[&#x27;</span>,<span class="string">&#x27;\^&#x27;</span>,<span class="string">&#x27;\]&#x27;</span>,<span class="string">&#x27;\&quot;&#x27;</span>,<span class="string">&#x27;\-&#x27;</span>,<span class="string">&#x27;\$&#x27;</span>,<span class="string">&#x27;\*&#x27;</span>,<span class="string">&#x27;\?&#x27;</span>,<span class="string">&#x27;\&lt;&#x27;</span>,<span class="string">&#x27;\&gt;&#x27;</span>,<span class="string">&#x27;\=&#x27;</span>,<span class="string">&#x27;\`&#x27;</span>,];</span><br><span class="line">    <span class="keyword">foreach</span> (<span class="variable">$blacklist</span> <span class="keyword">as</span> <span class="variable">$blackitem</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="title function_ invoke__">preg_match</span>(<span class="string">&#x27;/&#x27;</span> . <span class="variable">$blackitem</span> . <span class="string">&#x27;/m&#x27;</span>, <span class="variable">$wllm</span>)) &#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;LTLT说不能用这些奇奇怪怪的符号哦！&quot;</span>);</span><br><span class="line">    &#125;&#125;</span><br><span class="line"><span class="keyword">if</span>(<span class="title function_ invoke__">preg_match</span>(<span class="string">&#x27;/[a-zA-Z]/is&#x27;</span>,<span class="variable">$wllm</span>))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&quot;Ra&#x27;s Al Ghul说不能用字母哦！&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;NoVic4说：不错哦小伙子，可你能拿到flag吗？&quot;</span>;</span><br><span class="line"><span class="keyword">eval</span>(<span class="variable">$wllm</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;蔡总说：注意审题！！！&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span> 蔡总说：注意审题！！！</span><br></pre></td></tr></table></figure>
 
@@ -147,7 +147,7 @@
 
 <p>payload：?wllm&#x3D;(<del>%8C%86%8C%8B%9A%92)(</del>%9C%9E%8B%DF%D0%99%93%93%93%93%93%9E%9E%9E%9E%9E%9E%98%98%98%98%98%98%98);</p>
 <p>最后得到flag</p>
-<h1 id="strlen-intval绕过"><a href="#strlen-intval绕过" class="headerlink" title="strlen+intval绕过"></a>strlen+intval绕过</h1><p>![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2025-03-15 203147.png)</p>
+<h1 id="strlen-intval绕过"><a href="#strlen-intval绕过" class="headerlink" title="strlen+intval绕过"></a>strlen+intval绕过</h1><p><img src="https://cdn.jsdelivr.net/gh/A-gi-art/picture2/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-03-15%20203147.png"></p>
 <p>进行代码审计, PHP 中，<code>intval()</code> 函数用于将变量转换为整数类型。它会尝试从给定的变量中提取一个整数值，并根据需要进行类型转换。</p>
 <p>strlen（）函数是求长度的函数</p>
 <p>这道题需要满足的条件是num的长度小于等于四，并且num+1经过intval（）处理后大于500000</p>
@@ -169,7 +169,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/03/15/web%E5%A4%8D%E7%8E%B01/" data-id="cm8a8wwbc0007mcvqbr95gpqy" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/03/15/web%E5%A4%8D%E7%8E%B01/" data-id="cm8a979f700067svq6egubcys" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -208,7 +208,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/12/26/%E5%8D%B1%E9%99%A9%E5%87%BD%E6%95%B0/" data-id="cm8a8wwbd0009mcvq4863hkyb" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2024/12/26/%E5%8D%B1%E9%99%A9%E5%87%BD%E6%95%B0/" data-id="cm8a979f900087svqh2v70gth" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -328,7 +328,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/12/26/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/" data-id="cm8a8wwbc0008mcvq6xre1yoz" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2024/12/26/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/" data-id="cm8a979f900097svq48iz4np5" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -394,7 +394,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/12/22/%E6%96%B0%E7%94%9F%E8%B5%9Bwp/" data-id="cm8a8wwbd000amcvqhei4fpqx" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2024/12/22/%E6%96%B0%E7%94%9F%E8%B5%9Bwp/" data-id="cm8a979fa000b7svq8t9e3vtx" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -485,7 +485,7 @@ XML 文件或其他标记语言文件: 文件的内容会被直接输出。
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/12/19/php%E4%BC%AA%E5%8D%8F%E8%AE%AE/" data-id="cm8a8wwbb0004mcvq2r3r7sa8" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2024/12/19/php%E4%BC%AA%E5%8D%8F%E8%AE%AE/" data-id="cm8a979f600057svqa2318u3d" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -528,7 +528,7 @@ XML 文件或其他标记语言文件: 文件的内容会被直接输出。
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/12/19/PHP%E5%BC%B1%E7%B1%BB%E5%9E%8B/" data-id="cm8a8wwba0003mcvq5ng404ba" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2024/12/19/PHP%E5%BC%B1%E7%B1%BB%E5%9E%8B/" data-id="cm8a979f500027svq2uao8msc" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -583,7 +583,7 @@ XML 文件或其他标记语言文件: 文件的内容会被直接输出。
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/12/19/PHP%E5%BC%B1%E7%B1%BB%E5%9E%8B%E9%97%AE%E9%A2%98/" data-id="cm8a8wwb80001mcvq4we93p3a" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2024/12/19/PHP%E5%BC%B1%E7%B1%BB%E5%9E%8B%E9%97%AE%E9%A2%98/" data-id="cm8a979f500037svq7yos6rd0" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -628,7 +628,7 @@ XML 文件或其他标记语言文件: 文件的内容会被直接输出。
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/11/05/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" data-id="cm8a8wwbh000cmcvq75aj0p3q" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2024/11/05/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" data-id="cm8a979fa000c7svqf5vx01k3" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -677,7 +677,7 @@ XML 文件或其他标记语言文件: 文件的内容会被直接输出。
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/11/01/%E4%B8%80%E5%91%A8%E5%81%9A%E9%A2%98%E6%80%BB%E7%BB%93/" data-id="cm8a8wwbc0006mcvq3xew233a" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2024/11/01/%E4%B8%80%E5%91%A8%E5%81%9A%E9%A2%98%E6%80%BB%E7%BB%93/" data-id="cm8a979f800077svq1n0ehgfl" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -713,7 +713,7 @@ XML 文件或其他标记语言文件: 文件的内容会被直接输出。
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/11/01/MISC/" data-id="cm8a8wwb40000mcvqal34hre6" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2024/11/01/MISC/" data-id="cm8a979f400017svqb8430kp8" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
