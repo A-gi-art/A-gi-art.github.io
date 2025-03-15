@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="危险函数❑system()：输出并返回最后一行Shell结果。**❑passthru()**：只调用命令，把命令的运行结果原样地直接输出到标准输出设备上。它和system()函数都可以获得命令执行的状态码。**❑exec()**：不输出结果，只返回最后一行Shell结果，所有结果可以保存到一个返回的数组里面。❑popen（）：打开一个进程管道来执行给定的命令，返回一个文件句柄。由于返回的是一个文件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/2024/12/26/%E5%8D%B1%E9%99%A9%E5%87%BD%E6%95%B0/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="危险函数❑system()：输出并返回最后一行Shell结果。**❑passthru()**：只调用命令，把命令的运行结果原样地直接输出到标准输出设备上。它和system()函数都可以获得命令执行的状态码。**❑exec()**：不输出结果，只返回最后一行Shell结果，所有结果可以保存到一个返回的数组里面。❑popen（）：打开一个进程管道来执行给定的命令，返回一个文件句柄。由于返回的是一个文件">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-12-26T13:02:29.511Z">
+<meta property="article:modified_time" content="2024-12-26T13:02:29.511Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-危险函数" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/12/26/%E5%8D%B1%E9%99%A9%E5%87%BD%E6%95%B0/" class="article-date">
+  <time class="dt-published" datetime="2024-12-26T13:02:29.511Z" itemprop="datePublished">2024-12-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="危险函数"><a href="#危险函数" class="headerlink" title="危险函数"></a>危险函数</h2><p><strong>❑system()：</strong>输出并返回最后一行Shell结果。<br>**❑passthru()**：只调用命令，把命令的运行结果原样地直接输出到标准<br>输出设备上。它和system()函数都可以获得命令执行的状态码。<br>**❑exec()**：不输出结果，只返回最后一行Shell结果，所有结果可以保存<br>到一个返回的数组里面。<br><strong>❑popen（）</strong>：打开一个进程管道来执行给定的命令，返回一个文件句柄。由于返回的是一个文件句柄，因此可以对它进行读和写。在PHP3中，对这种句柄只能做单一的操作，要么写，要么读；从PHP4开始，可以对其同时进行读和写。除非这个句柄是以一种模式（读或写）打<br>开的，否则必须调用pclose()函数来关闭它。<br>**❑proc_open()**：执行一个命令，并且打开用于输入&#x2F;输出的文件指针。<br><strong>❑move_uploaded_file()：</strong>将上传的文件移动到新位置。<br>**❑eval()**：把字符串作为PHP代码执行。<br>**❑copy()**：拷贝文件。<br>**❑shell_exec()**：通过shell环境执行命令，并且以字符串的方式返回完整<br>的输出。<br><strong>❑assert（$assertion [, string $description]）</strong>：检查一个断言是否为FALSE。如果assertion是字符串，它将被assert()当作PHP代码来执行</p>
+<p>![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2024-12-26 191528.png)</p>
+<p>上面的是LINUX平台常用命令的执行格式。</p>
+<h1 id="无参数RCE"><a href="#无参数RCE" class="headerlink" title="无参数RCE"></a>无参数RCE</h1><p>实际上就是通过调用函数得到想要的字符指令的过程</p>
+<p>❑$_POST<br>❑$_GET<br>❑$_FILES<br>❑$_ENV<br>❑$_cookie<br>❑$_session</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="variable">$code</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;code&#x27;</span>];</span><br><span class="line"><span class="keyword">if</span>(!<span class="keyword">empty</span>(<span class="string">&#x27;code&#x27;</span>))</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">if</span> (<span class="string">&#x27;;&#x27;</span> === <span class="title function_ invoke__">preg_replace</span>(<span class="string">&#x27;/[\/\*W\s]+/&#x27;</span>,<span class="string">&#x27;&#x27;</span>, <span class="variable">$code</span>)) ;<span class="comment">//使用函数尝试从变量中移除所有的换行符，空格，制表符，和/*。如果最后的结果是；，则进行内部条件块</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">eval</span>(<span class="variable">$code</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span>&#123;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;no,wayyyyy!!!!&quot;</span></span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span>&#123;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;no ,wayy!!!&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="1-getallheaders-和apache-request-headers"><a href="#1-getallheaders-和apache-request-headers" class="headerlink" title="1.getallheaders()和apache_request_headers()"></a>1.getallheaders()和apache_request_headers()</h2><p>getallheaders()是Apache中间件函数，可以用来获取HTTP请求头部<br>（header）中的所有变量信息（例如User-Agent）。<br>apache_request_headers()是getallheaders()的别名函数，二者的效果一致。我们可以在header中增加一些自定义的字段，同时在字段值部分指定想要执行的指令。例如，test:system（ls）表示在header中增加了test<br>字段，其值为system（ls）。此时，如果执行getallheaders()，则可以得到一个包含test字段和其值的结果。我们可以将该自定义字段添加在特定位置（例如header的头部或尾部），然后执行指令。将自定义字段添<br>加到特定位置是为了方便通过其他函数进行调取。例如，我们如果将test添加在header的尾部，那么就可以使用**end()<strong>函数直接获取test的值；<br>如果将test添加在header的首部，就可以使用</strong>pos()**函数获取test的值。</p>
+<h2 id="2-get-defined-vars"><a href="#2-get-defined-vars" class="headerlink" title="2.get_defined_vars()"></a>2.get_defined_vars()</h2><p>该函数属于通用函数，可以用于回显所有的变量信息</p>
+<p>主要包括</p>
+<p>❑$_GET<br>❑$_POST<br>❑$_FILES<br>❑$_cookie</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/12/26/%E5%8D%B1%E9%99%A9%E5%87%BD%E6%95%B0/" data-id="cm8a8wwbd0009mcvq4863hkyb" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2025/03/15/web%E5%A4%8D%E7%8E%B01/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2024/12/26/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/03/">March 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/12/">December 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">November 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">October 2024</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2025/03/15/web%E5%A4%8D%E7%8E%B01/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2024/12/26/%E5%8D%B1%E9%99%A9%E5%87%BD%E6%95%B0/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2024/12/26/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2024/12/22/%E6%96%B0%E7%94%9F%E8%B5%9Bwp/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2024/12/19/php%E4%BC%AA%E5%8D%8F%E8%AE%AE/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2025 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

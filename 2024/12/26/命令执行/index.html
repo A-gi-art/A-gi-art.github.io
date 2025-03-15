@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="命令执行命令注入漏洞1.preg_replace()1preg_replace(pattern, replacement, subject, limit &#x3D; -1, &amp;count &#x3D; 0)    123456$pattern &#x3D; &#x27;&#x2F;hello&#x2F;&#x27;;$replacement &#x3D; &#x27;hi&#x27;;$subject &#x3D; &#x27;hello world, h">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/2024/12/26/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="命令执行命令注入漏洞1.preg_replace()1preg_replace(pattern, replacement, subject, limit &#x3D; -1, &amp;count &#x3D; 0)    123456$pattern &#x3D; &#x27;&#x2F;hello&#x2F;&#x27;;$replacement &#x3D; &#x27;hi&#x27;;$subject &#x3D; &#x27;hello world, h">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-12-26T08:15:28.261Z">
+<meta property="article:modified_time" content="2024-12-26T11:10:49.929Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-命令执行" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/12/26/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/" class="article-date">
+  <time class="dt-published" datetime="2024-12-26T08:15:28.261Z" itemprop="datePublished">2024-12-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="命令执行"><a href="#命令执行" class="headerlink" title="命令执行"></a>命令执行</h1><h2 id="命令注入漏洞"><a href="#命令注入漏洞" class="headerlink" title="命令注入漏洞"></a>命令注入漏洞</h2><h3 id="1-preg-replace"><a href="#1-preg-replace" class="headerlink" title="1.preg_replace()"></a>1.preg_replace()</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_ invoke__">preg_replace</span>(pattern, replacement, subject, limit = -<span class="number">1</span>, &amp;count = <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$pattern</span> = <span class="string">&#x27;/hello/&#x27;</span>;</span><br><span class="line"><span class="variable">$replacement</span> = <span class="string">&#x27;hi&#x27;</span>;</span><br><span class="line"><span class="variable">$subject</span> = <span class="string">&#x27;hello world, hello everyone!&#x27;</span>;</span><br><span class="line"><span class="variable">$result</span> = <span class="title function_ invoke__">preg_replace</span>(<span class="variable">$pattern</span>, <span class="variable">$replacement</span>, <span class="variable">$subject</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$result</span>; <span class="comment">// 输出：hi world, hi everyone!</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-用户自定义的函数可以导致代码执行"><a href="#2-用户自定义的函数可以导致代码执行" class="headerlink" title="2.用户自定义的函数可以导致代码执行"></a>2.用户自定义的函数可以导致代码执行</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$dyn_func</span> = <span class="variable">$_GET</span>[<span class="string">&quot;dyn_func&quot;</span>];</span><br><span class="line"><span class="variable">$argument</span> = <span class="variable">$_GET</span>[<span class="string">&quot;argument&quot;</span>];</span><br><span class="line"><span class="variable">$dyn_func</span>(<span class="variable">$argument</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>当用户可以控制函数名和参数时，可能会导致代码的执行。可以进行变量函数，$d什么是一个变量，它存储了一个函数名。在php中可以使用变量来调用函数，这种方式称为变量函数。</p>
+<p>例如，如果$d什么的值是一个”strlen“，那么第三行代码相当于调用strlen函数来获取$a什么的长度。</p>
+<p>参数传递，$a是传递给函数的参数。它可以是任何php数据类型，具体取决于被调用函数的要求。</p>
+<p>例如如果$d什么的值是”echo”，那么第三行代码相当余输出$a什么的值。</p>
+<h3 id="3-反引号"><a href="#3-反引号" class="headerlink" title="3.反引号"></a>3.反引号</h3><p>在php中，反引号和echo配合的时候，会先执行反引号中的命令，再将结果输出。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">echo</span><span class="string">&#x27;ls -al&#x27;</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>上述代码会先执行指令，然后输出结果。</p>
+<p>除了echo之外，php中的echo还有一种用法，即php短标签模式</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?=</span>‘ls -al’<span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>效果同上。</p>
+<h3 id="4-花括号"><a href="#4-花括号" class="headerlink" title="4.花括号"></a>4.花括号</h3><p>在php中，双引号字符串”  “里可以使用花括号中包裹变量或者表达式，php会对花括号内的内容进行计算，并将结果替换到字符串中</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$var</span>= <span class="string">&quot;aaabbbccccc$&#123;&#x27;ls&#x27;&#125;&quot;</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>也可以是代码。</p>
+<h3 id="5-回调函数"><a href="#5-回调函数" class="headerlink" title="5.回调函数"></a>5.回调函数</h3><p>很多函数都可以执行回调函数，当回调函数用户可控时，将导致代码执行</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$evil_callback</span> =<span class="variable">$_GET</span>&#123;<span class="string">&quot;callback&quot;</span>&#125;;</span><br><span class="line"><span class="variable">$some_array</span> = <span class="keyword">array</span>&#123;<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;;</span><br><span class="line"><span class="variable">$new_array</span> = <span class="title function_ invoke__">array_map</span>(<span class="variable">$evil_callback</span>,<span class="variable">$some_array</span>)；</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="6-反序列化"><a href="#6-反序列化" class="headerlink" title="6.反序列化"></a>6.反序列化</h3><p>在PHP中，序列化和反序列化是处理对象或数组等复杂数据类型时非常重要的技术。<strong>序列化（Serialization）</strong>是将一个复杂数据类型（如对象或数组）转换成一个可以存储或传输的字符串。<strong>反序列化（Deserialization）</strong>则是将这个字符串还原回原来的复杂数据类型。</p>
+<p><code>serialize()</code> 函数是 PHP 中用于将数据结构（如数组或对象）转换为一个可存储或传输的字符串表示形式的内置函数。这个过程被称为序列化。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">string</span> <span class="title function_ invoke__">serialize</span> ( <span class="keyword">mixed</span> <span class="variable">$value</span> )</span><br></pre></td></tr></table></figure>
+
+<p><code>unserialize()</code> 函数是 PHP 中用于将序列化后的字符串转换回原来的 PHP 值（如数组或对象）的内置函数。这个过程被称为反序列化。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">mixed</span> <span class="title function_ invoke__">unserialize</span> ( <span class="keyword">string</span> <span class="variable">$str</span> )</span><br></pre></td></tr></table></figure>
+
+<p>两个函数搭配使用</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">   <span class="class"><span class="keyword">class</span> <span class="title">Example</span></span></span><br><span class="line"><span class="class">   </span>&#123;</span><br><span class="line">   <span class="keyword">var</span> <span class="variable">$var</span> = <span class="string">&quot; &quot;</span>;</span><br><span class="line">   <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">   </span>&#123;</span><br><span class="line">   <span class="keyword">eval</span>(<span class="variable language_">$this</span>-&gt;<span class="variable">$var</span>);</span><br><span class="line">   &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="title function_ invoke__">unserialize</span>(<span class="variable">$_GET</span> [<span class="string">&quot;saved_code&quot;</span>])</span><br><span class="line">  <span class="meta">?&gt;</span> </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">O：<span class="number">7</span>：<span class="string">&quot;Example&quot;</span>:<span class="number">1</span>:&#123;s:<span class="number">3</span>:<span class="string">&quot;var&quot;</span>;s:<span class="string">&quot;system(&#x27;ls&#x27;);&quot;</span>;&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<pre><code>1.	O:7:&quot;Example&quot;:1:
+
+○	O: 表示这是一个对象（Object）。
+
+○	7: 表示对象的类名长度为7个字符。
+
+○	&quot;Example&quot;: 类名是Example。
+
+○	1: 表示这个对象有1个属性。
+
+2.	&#123;s:3:&quot;var&quot;;s:13:&quot;system(&#39;ls&#39;);&quot;;&#125;
+
+○	s:3:&quot;var&quot;:
+
+●	s: 表示这是一个字符串（String）。
+
+●	3: 表示字符串的键名长度为3个字符。
+
+●	&quot;var&quot;: 键名是var。
+
+○	s:13:&quot;system(&#39;ls&#39;);&quot;;
+
+●	s: 表示这是一个字符串。
+
+●	13: 表示字符串的长度为13个字符。
+
+●	&quot;system(&#39;ls&#39;);&quot;: 字符串的值是system(&#39;ls&#39;);。
+</code></pre>
+<p>整体含义</p>
+<p>这串反序列化字符串表示一个Example类的对象，该对象有一个属性var，其值为system(‘ls’);。</p>
+<p>![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2024-12-25 192858.png)</p>
+<p>![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2024-12-25 192908.png)</p>
+<p>主要的魔术方法 </p>
+<p>1、__get、__set 这两个方法是为在类和他们的父类中没有声明的属性而设计的  </p>
+<p>__get( $property ) 当调用一个未定义的属性时访问此方法</p>
+<p>__ <strong>set( $property, $value ) 给一个未定义的属性赋值时调用 这里的没有声明包括访问控制为proteced,private的属性（即没有权限访问的属性）</strong></p>
+<p>__ 2、__isset、__unset <strong>isset( $property ) 当在一个未定义的属性上调用isset()函数时调用此方法</strong></p>
+<p>__ <strong>unset( $property ) 当在一个未定义的属性上调用unset()函数时调用此方法 与__get方法和__set方法相同，这里的没有声明包括访问控制为proteced,private的属性（即没有权限访问的属性）</strong></p>
+<p>__ 3、__call __call( $method, $arg_array ) 当调用一个未定义(包括没有权限访问)的方法是调用此方法 </p>
+<p>4、__autoload __autoload 函数，使用尚未被定义的类时自动调用。通过此函数，脚本引擎在 PHP 出错失败前有了最后一个机会加载所需的类。 注意: 在 <strong>autoload 函数中抛出的异常不能被 catch 语句块捕获并导致致命错误。</strong></p>
+<p>__ 5、__construct、__destruct __construct 构造方法，当一个对象被创建时调用此方法，好处是可以使构造方法有一个独一无二的名称，无论它所在的类的名称是什么，这样你在改变类的名称时，就不需要改变构造方法的名称 __destruct 析构方法，PHP将在对象被销毁前（即从内存中清除前）调用这个方法 默认情况下,PHP仅仅释放对象属性所占用的内存并销毁对象相关的资源.，析构函数允许你在使用一个对象之后执行任意代码来清除内存，当PHP决定你的脚本不再与对象相关时，析构函数将被调用. 在一个函数的命名空间内，这会发生在函数return的时候，对于全局变量，这发生于脚本结束的时候，如果你想明确地销毁一个对象，你可以给指向该对象的变量分配任何其它值，通常将变量赋值勤为NULL或者调用unset。</p>
+<p> 6、<strong>clone PHP5中的对象赋值是使用的引用赋值，使用clone方法复制一个对象时，对象会自动调用__clone魔术方法，如果在对象复制需要执行某些初始化操作，可以在__clone方法实现。</strong></p>
+<p>__ 7、__toString __toString方法在将一个对象转化成字符串时自动调用，比如使用echo打印对象时，如果类没有实现此方法，则无法通过echo打印对象，否则会显示：Catchable fatal error: Object of class test could not be converted to string in，此方法必须返回一个字符串。 在PHP 5.2.0之前，__toString方法只有结合使用echo() 或 print()时 才能生效。PHP 5.2.0之后，则可以在任何字符串环境生效（例如通过printf()，使用%s修饰符），但 不能用于非字符串环境（如使用%d修饰符） 从PHP 5.2.0，如果将一个未定义__toString方法的对象 转换为字符串，会报出一个E_RECOVERABLE_ERROR错误。</p>
+<p> 8、__sleep、__wakeup __sleep 串行化的时候用 __wakeup 反串行化的时候调用 serialize() 检查类中是否有魔术名称 __sleep 的函数。如果这样，该函数将在任何序列化之前运行。它可以清除对象并应该返回一个包含有该对象中应被序列化的所有变量名的数组。 使用 __sleep 的目的是关闭对象可能具有的任何数据库连接，提交等待中的数据或进行类似的清除任务。此外，如果有非常大的对象而并不需要完全储存下来时此函数也很有用。 相反地，unserialize() 检查具有魔术名称 __wakeup 的函数的存在。如果存在，此函数可以重建对象可能具有的任何资源。使用 __wakeup 的目的是重建在序列化中可能丢失的任何数据库连接以及处理其它重新初始化的任务。</p>
+<p> 9、<strong>set_state 当调用var_export()时，这个静态 方法会被调用（自PHP 5.1.0起有效）。本方法的唯一参数是一个数组，其中包含按array(’property’ &#x3D;&gt; value, …)格式排列的类属性。</strong></p>
+<p>__ 10、__invoke 当尝试以调用函数的方式调用一个对象时，__invoke 方法会被自动调用。PHP5.3.0以上版本有效 11、__callStatic 它的工作方式类似于 __call() 魔术方法，__callStatic() 是为了处理静态方法调用，PHP5.3.0以上版本有效，PHP 确实加强了对 __callStatic() 方法的定义；它必须是公共的，并且必须被声明为静态的。 同样，__call() 魔术方法必须被定义为公共的，所有其他魔术方法都必须如此。<br>下面我们通过具体题目来讲解反序列化漏洞</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">require_once</span>(<span class="string">&#x27;shield.php&#x27;</span>);</span><br><span class="line"><span class="variable">$x</span> = <span class="keyword">new</span> <span class="title class_">Shield</span>();<span class="comment">//创建了一个shield类的实例</span></span><br><span class="line"><span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;class&#x27;</span>]) &amp;&amp; <span class="variable">$g</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;class&#x27;</span>];<span class="comment">//检查是否存在class参数，如果存在将其赋值给$g</span></span><br><span class="line"><span class="keyword">if</span> (!<span class="keyword">empty</span>(<span class="variable">$g</span>)) &#123;</span><br><span class="line">    <span class="variable">$x</span> = <span class="title function_ invoke__">unserialize</span>(<span class="variable">$g</span>);</span><br><span class="line">&#125;<span class="comment">//如果$g不为空，将其反序列化并将其的值赋给$x</span></span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$x</span>-&gt;<span class="title function_ invoke__">readfile</span>();</span><br><span class="line"><span class="meta">?&gt;</span><span class="comment">//readfile 是一个用于读取文件并将其内容直接输出到浏览器或客户端的函数。</span></span><br><span class="line">&lt; img src=<span class="string">&quot;showing.php?img=c2hpZWxkLmpwZw==&amp;width=100%&quot;</span>/&gt;<span class="comment">//HTML标签</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">// flag is in flag.php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Shield</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$file</span>;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$filename</span> = <span class="string">&#x27;&#x27;</span></span>) </span>&#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;file = <span class="variable">$filename</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">readfile</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">empty</span>(<span class="variable language_">$this</span>-&gt;file) &amp;&amp; <span class="title function_ invoke__">stripos</span>(<span class="variable">$this</span>-&gt;file, <span class="string">&#x27;..&#x27;</span>) === <span class="literal">FALSE</span> &amp;&amp; <span class="title function_ invoke__">stripos</span>(<span class="variable">$this</span>-&gt;file, <span class="string">&#x27;./&#x27;</span>) === <span class="literal">FALSE</span> &amp;&amp; <span class="title function_ invoke__">stripos</span>(<span class="variable">$this</span>-&gt;file, <span class="string">&#x27;/&#x27;</span>) === <span class="literal">FALSE</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> @<span class="title function_ invoke__">file_get_contents</span>(<span class="variable">$this</span>-&gt;file);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span>`</span><br></pre></td></tr></table></figure>
+
+<p>&#96;_wakeup在unserilize()调用之前触发，但如果被反序列化的字符串中对<br>应的对象的属性个数发生变化时，会导致反序列化失败，同时使__wakeup失效</p>
+<h3 id="反序列化进阶"><a href="#反序列化进阶" class="headerlink" title="反序列化进阶"></a>反序列化进阶</h3>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/12/26/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/" data-id="cm8a8wwbc0008mcvq6xre1yoz" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2024/12/26/%E5%8D%B1%E9%99%A9%E5%87%BD%E6%95%B0/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2024/12/22/%E6%96%B0%E7%94%9F%E8%B5%9Bwp/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/03/">March 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/12/">December 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">November 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">October 2024</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2025/03/15/web%E5%A4%8D%E7%8E%B01/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2024/12/26/%E5%8D%B1%E9%99%A9%E5%87%BD%E6%95%B0/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2024/12/26/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2024/12/22/%E6%96%B0%E7%94%9F%E8%B5%9Bwp/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2024/12/19/php%E4%BC%AA%E5%8D%8F%E8%AE%AE/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2025 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

