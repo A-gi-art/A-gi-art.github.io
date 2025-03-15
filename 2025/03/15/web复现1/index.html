@@ -6,13 +6,14 @@
   
   <title>Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="web 题解复现1[SWPUCTF 2021 新生赛]easyrce![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2025-03-15 174550.png) 首先进行代码审计 发现了eval（）函数，eval（）函数是命令执行函数，常见的命令执行函数还有 system()passthru()exec()shell_exec()popen()proc_o">
+  <meta name="description" content="web 题解复现1[SWPUCTF 2021 新生赛]easyrce 首先进行代码审计 发现了eval（）函数，eval（）函数是命令执行函数，常见的命令执行函数还有 system()passthru()exec()shell_exec()popen()proc_open()pcntl_exec() 直接使用system（）函数查看根目录下面有什么 system（）函数的作用为执行系统命令并输出结">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hexo">
 <meta property="og:url" content="http://example.com/2025/03/15/web%E5%A4%8D%E7%8E%B01/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="web 题解复现1[SWPUCTF 2021 新生赛]easyrce![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2025-03-15 174550.png) 首先进行代码审计 发现了eval（）函数，eval（）函数是命令执行函数，常见的命令执行函数还有 system()passthru()exec()shell_exec()popen()proc_o">
+<meta property="og:description" content="web 题解复现1[SWPUCTF 2021 新生赛]easyrce 首先进行代码审计 发现了eval（）函数，eval（）函数是命令执行函数，常见的命令执行函数还有 system()passthru()exec()shell_exec()popen()proc_open()pcntl_exec() 直接使用system（）函数查看根目录下面有什么 system（）函数的作用为执行系统命令并输出结">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/A-gi-art/picture2/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-03-15%20174550.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/A-gi-art/picture2/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-03-15%20175515.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/A-gi-art/picture2/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-03-15%20181146.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/A-gi-art/picture2/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-03-15%20181600.png">
@@ -31,10 +32,10 @@
 <meta property="og:image" content="c:\Users\21649\AppData\Local\Temp\ec0e39ea1f32223a508857a03345dc77.png">
 <meta property="og:image" content="c:\Users\21649\AppData\Local\Temp\17c6161dbbf9b07fbcaa19aa123c45e0.png">
 <meta property="article:published_time" content="2025-03-15T13:12:42.142Z">
-<meta property="article:modified_time" content="2025-03-15T13:39:25.647Z">
+<meta property="article:modified_time" content="2025-03-15T13:42:05.930Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/A-gi-art/picture2/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-03-15%20175515.png">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/A-gi-art/picture2/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-03-15%20174550.png">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -101,7 +102,7 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h1 id="web-题解复现1"><a href="#web-题解复现1" class="headerlink" title="web 题解复现1"></a>web 题解复现1</h1><h2 id="SWPUCTF-2021-新生赛-easyrce"><a href="#SWPUCTF-2021-新生赛-easyrce" class="headerlink" title="[SWPUCTF 2021 新生赛]easyrce"></a>[SWPUCTF 2021 新生赛]easyrce</h2><p>![](C:\Users\21649\Pictures\Screenshots\屏幕截图 2025-03-15 174550.png)</p>
+        <h1 id="web-题解复现1"><a href="#web-题解复现1" class="headerlink" title="web 题解复现1"></a>web 题解复现1</h1><h2 id="SWPUCTF-2021-新生赛-easyrce"><a href="#SWPUCTF-2021-新生赛-easyrce" class="headerlink" title="[SWPUCTF 2021 新生赛]easyrce"></a>[SWPUCTF 2021 新生赛]easyrce</h2><p><img src="https://cdn.jsdelivr.net/gh/A-gi-art/picture2/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-03-15%20174550.png"></p>
 <p>首先进行代码审计</p>
 <p>发现了<strong>eval（）函数</strong>，<strong>eval（）函数</strong>是命令执行函数，常见的命令执行函数还有</p>
 <p><strong>system()</strong><br><strong>passthru()</strong><br><strong>exec()</strong><br><strong>shell_exec()</strong><br><strong>popen()</strong><br><strong>proc_open()</strong><br><strong>pcntl_exec()</strong></p>
@@ -189,7 +190,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/03/15/web%E5%A4%8D%E7%8E%B01/" data-id="cm8a979f700067svq6egubcys" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/03/15/web%E5%A4%8D%E7%8E%B01/" data-id="cm8a9ayn800060gvqfs572mo5" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
